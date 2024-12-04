@@ -16,15 +16,15 @@ public class Beranda extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Membuat panel header dengan ukuran 1440x350
+        // Membuat panel header dengan ukuran 1440x220
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
-        headerPanel.setPreferredSize(new Dimension(1440, 350));
+        headerPanel.setPreferredSize(new Dimension(1440, 220));
 
         // Menggunakan gambar sebagai background header
-        headerImageIcon = new ImageIcon("asset/Header.jpg");
+        headerImageIcon = new ImageIcon("asset/HeaderBaru.jpg");
         headerImageLabel = new JLabel();
-        headerImageLabel.setIcon(resizeHeaderImage(headerImageIcon, 1440, 350));
+        headerImageLabel.setIcon(resizeHeaderImage(headerImageIcon, 1440, 220));
         headerImageLabel.setLayout(new BorderLayout());
 
         // Membuat panel kanan untuk tombol profil
