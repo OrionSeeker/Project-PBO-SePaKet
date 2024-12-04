@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.sql.*;
 
 public class LoginRegister extends JFrame {
     private CardLayout cardLayout;
@@ -10,6 +11,8 @@ public class LoginRegister extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(720, 480);
         setLocationRelativeTo(null);
+        setResizable(false);
+
 
         // Ini cardlayout untuk pindah antara login dan register
         cardLayout = new CardLayout();
@@ -158,6 +161,64 @@ public class LoginRegister extends JFrame {
 
         add(cardPanel);
         cardLayout.show(cardPanel, "login");
+
+        // Listener untuk login dan register
+        loginBtn.addActionListener(e -> {
+            String usn = usernameField.getText();
+            String pwd = new String(passwordField.getPassword());
+
+            try (Connection conn = ConnectKeDB.getConnection()) {
+                String query = "SELECT * FROM user WHERE username = ? AND password = ?";
+                try (PreparedStatement st = conn.prepareStatement(query)){
+                    st.setString(1, usn);
+                    st.setString(2, pwd);
+
+                    try (ResultSet rs = st.executeQuery()){
+                        if (rs.next()){
+                            JOptionPane.showMessageDialog(this, "Login Berhasil!");
+                            JFrame frameBeranda = new Beranda();
+                            frameBeranda.setVisible(true);
+                            frameBeranda.setLocationRelativeTo(null);
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(this, "User name atau Password salah!!!!", "Login Gagal", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+                System.out.println("Gagal konek ke db");
+            }
+        });
+
+
+        registBtn.addActionListener(e -> {
+            String usn = usernameField2.getText();
+            String pwd = new String(passwordField2.getPassword());
+        
+            try (Connection conn =ConnectKeDB.getConnection()) {
+                String query = "INSERT INTO user(username, password) VALUES (?, ?)";
+                try (PreparedStatement st = conn.prepareStatement(query)) {
+                    st.setString(1, usn);
+                    st.setString(2, pwd);
+        
+                    st.executeUpdate();
+                    JOptionPane.showMessageDialog(this, "Register Berhasil!!! Yuk segera login!");
+                    cardLayout.show(cardPanel, "login");
+                }
+            }
+            catch (SQLException ex) {
+                if (ex.getMessage().contains("Duplicate entry")) {
+                    JOptionPane.showMessageDialog(this, "User name sudah pernah dipakai...", "Register Gagal", JOptionPane.WARNING_MESSAGE);
+                }
+                else {
+                    ex.printStackTrace();
+                    System.out.println("Gagal konek ke db");
+                }
+            }
+        });
+        
     }
 
 }

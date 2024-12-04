@@ -1,3 +1,7 @@
 {
-  "java.debug.settings.onBuildFailureProceed": true
+  "java.debug.settings.onBuildFailureProceed": true,
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "c:\\Users\\Michael Effendy\\Documents\\GitHub\\modul-4-OrionSeeker\\Driver\\mysql-connector-j-9.1.0.jar"
+  ]
 }
