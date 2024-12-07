@@ -7,16 +7,17 @@ public class PesanTiket extends JFrame {
     public PesanTiket() {
 
         setTitle("SePaKet: Pesan Tiket Di Sini");
-        setSize(1920, 1080);
+        setSize(1440, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+        setResizable(false);
 
         Font customFont18 = loadFont("asset/Poppins-Bold.ttf", 18);
         Font customFont28 = loadFont("asset/Poppins-Bold.ttf", 28);
         Font customFont24 = loadFont("asset/Poppins-Bold.ttf", 24);
 
-        ImageIcon gambarHeader = new ImageIcon(new ImageIcon("asset/header.jpg").getImage().getScaledInstance(1920, 300, Image.SCALE_SMOOTH));
+        ImageIcon gambarHeader = new ImageIcon(new ImageIcon("asset/header.jpg").getImage().getScaledInstance(1440, 300, Image.SCALE_SMOOTH));
         JLabel headerLabel = new JLabel(gambarHeader);
         headerLabel.setLayout(new BorderLayout());
 
@@ -179,11 +180,17 @@ public class PesanTiket extends JFrame {
         mainPanel.add(pesanTiketPanel, gbc);
 
         setVisible(true);
+
+
+        pesanBtn.addActionListener(e -> {
+            JFrame frameKonfirm = new HalamanPembayaran(namaField.getText(), NIKField.getText(), emailField.getText(), (String) jenisTiketField.getSelectedItem(), (int) jumlahField.getValue());
+            frameKonfirm.setVisible(true);
+        });
     }
 
-    // public static void main(String[] args) {
-    //     new PesanTiket();
-    // }
+    public static void main(String[] args) {
+        new PesanTiket();
+    }
 
     // Ini buat pake font poppins
     private Font loadFont(String path, float size) {
