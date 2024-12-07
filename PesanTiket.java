@@ -26,6 +26,14 @@ public class PesanTiket extends JFrame {
         profilePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 100, 100));
         JLabel profileLabel = new JLabel(gambarProfil);
         profileLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        // Tambahkan listener untuk membuka Profile.java
+        profileLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new Profile(); // Membuka Profile frame
+            }
+        });
+
         profilePanel.add(profileLabel, BorderLayout.EAST);
         headerLabel.add(profilePanel, BorderLayout.EAST);
 
@@ -181,9 +189,9 @@ public class PesanTiket extends JFrame {
         setVisible(true);
     }
 
-    // public static void main(String[] args) {
-    //     new PesanTiket();
-    // }
+    public static void main(String[] args) {
+        new PesanTiket();
+    }
 
     // Ini buat pake font poppins
     private Font loadFont(String path, float size) {

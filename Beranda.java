@@ -49,7 +49,7 @@ public class Beranda extends JFrame {
         profileButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Halaman Profil akan dibuka!");
+                new Profile(); 
             }
         });
 
@@ -187,7 +187,6 @@ public class Beranda extends JFrame {
             
             // Menempatkan teks di tengah tombol
             g2.drawString(getText(), (getWidth() - textWidth) / 2, (getHeight() + textHeight) / 2 - 5);
-
             g2.dispose();
         }
 
