@@ -1,4 +1,5 @@
 public class Movie {
+    private int id;
     private String title;
     private String director;
     private int year;
@@ -6,8 +7,10 @@ public class Movie {
     private String description;
     private String image;
     private String pathMovie;
+    private String status;
 
-    public Movie(String title, String director, int year, String genre, String description, String image, String pathMovie) {
+    public Movie(int id,String title, String director, int year, String genre, String description, String image, String pathMovie, String status) {
+        this.id = id;
         this.title = title;
         this.director = director;
         this.year = year;
@@ -15,6 +18,10 @@ public class Movie {
         this.description = description;
         this.image = image;
         this.pathMovie = pathMovie;
+        this.status = status;
+    }
+    public int getId() {
+        return id;
     }
     public String getTitle() {
         return title;
@@ -43,4 +50,8 @@ public class Movie {
     public String getPathMovie() {
         return pathMovie;
     }
+    public String getStatus() {
+        return status;
+    }
+    
 }

@@ -2,6 +2,7 @@
   "java.debug.settings.onBuildFailureProceed": true,
   "java.project.referencedLibraries": [
     "lib/**/*.jar",
-    "c:\\Users\\Michael Effendy\\Documents\\GitHub\\modul-4-OrionSeeker\\Driver\\mysql-connector-j-9.1.0.jar"
+    "c:\\Users\\Michael Effendy\\Documents\\GitHub\\modul-4-OrionSeeker\\Driver\\mysql-connector-j-9.1.0.jar",
+    "d:\\Kuliah\\Semester 5\\Pemrograman Berbasis Objek\\Praktikum\\Modul 4\\modul-4-jurnal-Rizani436\\modul-4-jurnal-Rizani436\\Driver\\mysql-connector-j-9.1.0.jar"
   ]
 }
