@@ -6,7 +6,7 @@ public class HalamanPembayaran extends JFrame {
     public HalamanPembayaran(String nama, String NIK, String email, String jenisTiket, int jumlahTiket) {
 
         setTitle("Pembayaran Tiket");
-        setSize(600, 400);
+        setSize(500, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
@@ -15,6 +15,14 @@ public class HalamanPembayaran extends JFrame {
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         add(mainPanel, BorderLayout.CENTER);
+
+        JPanel detailPanel = new JPanel();
+        detailPanel.setLayout(new BoxLayout(detailPanel, BoxLayout.Y_AXIS));
+        detailPanel.setBackground(Color.WHITE);
+        detailPanel.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
+        detailPanel.setPreferredSize(new Dimension(500, 350));
+        detailPanel.setMaximumSize(new Dimension(550, 350));
+        detailPanel.setBorder(BorderFactory.createMatteBorder(25, 100, 25, 100, Color.WHITE));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -26,78 +34,78 @@ public class HalamanPembayaran extends JFrame {
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(judulLabel, gbc);
+        detailPanel.add(judulLabel, gbc);
 
         gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.WEST;
 
         JLabel namaLabel = new JLabel("Nama Lengkap:");
-        namaLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        namaLabel.setFont(new Font("Arial", Font.BOLD, 18));
         gbc.gridx = 0;
         gbc.gridy = 1;
-        mainPanel.add(namaLabel, gbc);
+        detailPanel.add(namaLabel, gbc);
 
         JLabel namaValue = new JLabel(nama);
         namaValue.setFont(new Font("Arial", Font.PLAIN, 18));
         gbc.gridx = 1;
-        mainPanel.add(namaValue, gbc);
+        detailPanel.add(namaValue, gbc);
 
         JLabel NIKLabel = new JLabel("NIK:");
-        NIKLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        NIKLabel.setFont(new Font("Arial", Font.BOLD, 18));
         gbc.gridx = 0;
         gbc.gridy = 2;
-        mainPanel.add(NIKLabel, gbc);
+        detailPanel.add(NIKLabel, gbc);
 
         JLabel NIKValue = new JLabel(NIK);
         NIKValue.setFont(new Font("Arial", Font.PLAIN, 18));
         gbc.gridx = 1;
-        mainPanel.add(NIKValue, gbc);
+        detailPanel.add(NIKValue, gbc);
 
         JLabel emailLabel = new JLabel("Email:");
-        emailLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        emailLabel.setFont(new Font("Arial", Font.BOLD, 18));
         gbc.gridx = 0;
         gbc.gridy = 3;
-        mainPanel.add(emailLabel, gbc);
+        detailPanel.add(emailLabel, gbc);
 
         JLabel emailValue = new JLabel(email);
         emailValue.setFont(new Font("Arial", Font.PLAIN, 18));
         gbc.gridx = 1;
-        mainPanel.add(emailValue, gbc);
+        detailPanel.add(emailValue, gbc);
 
         JLabel jenisTiketLabel = new JLabel("Jenis Tiket:");
-        jenisTiketLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        jenisTiketLabel.setFont(new Font("Arial", Font.BOLD, 18));
         gbc.gridx = 0;
         gbc.gridy = 4;
-        mainPanel.add(jenisTiketLabel, gbc);
+        detailPanel.add(jenisTiketLabel, gbc);
 
         JLabel jenisTiketValue = new JLabel(jenisTiket);
         jenisTiketValue.setFont(new Font("Arial", Font.PLAIN, 18));
         gbc.gridx = 1;
-        mainPanel.add(jenisTiketValue, gbc);
+        detailPanel.add(jenisTiketValue, gbc);
 
         JLabel jumlahTiketLabel = new JLabel("Jumlah Tiket:");
-        jumlahTiketLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        jumlahTiketLabel.setFont(new Font("Arial", Font.BOLD, 18));
         gbc.gridx = 0;
         gbc.gridy = 5;
-        mainPanel.add(jumlahTiketLabel, gbc);
+        detailPanel.add(jumlahTiketLabel, gbc);
 
         JLabel jumlahTiketValue = new JLabel(String.valueOf(jumlahTiket));
         jumlahTiketValue.setFont(new Font("Arial", Font.PLAIN, 18));
         gbc.gridx = 1;
-        mainPanel.add(jumlahTiketValue, gbc);
+        detailPanel.add(jumlahTiketValue, gbc);
 
         JLabel totalHargaLabel = new JLabel("Total Harga:");
-        totalHargaLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        totalHargaLabel.setFont(new Font("Arial", Font.BOLD, 18));
         gbc.gridx = 0;
         gbc.gridy = 6;
-        mainPanel.add(totalHargaLabel, gbc);
+        detailPanel.add(totalHargaLabel, gbc);
 
         int hargaPerTiket = getHargaTiket(jenisTiket);
         int totalHarga = hargaPerTiket * jumlahTiket;
         JLabel totalHargaValue = new JLabel("Rp " + totalHarga);
         totalHargaValue.setFont(new Font("Arial", Font.PLAIN, 18));
         gbc.gridx = 1;
-        mainPanel.add(totalHargaValue, gbc);
+        detailPanel.add(totalHargaValue, gbc);
 
         JButton konfirBtn = new JButton("Konfirmasi Pembayaran");
         konfirBtn.setFont(new Font("Arial", Font.BOLD, 18));
@@ -109,9 +117,13 @@ public class HalamanPembayaran extends JFrame {
         konfirBtn.addActionListener(e -> {
             JFrame tiket = new HalamanKeluarTiket(nama, NIK, email, jenisTiket, jumlahTiket);
             tiket.setVisible(true);
+            dispose();
         });
-        mainPanel.add(konfirBtn, gbc);
+        detailPanel.add(Box.createVerticalStrut(10));
+        detailPanel.add(konfirBtn, gbc);
 
+
+        mainPanel.add(detailPanel);
         setVisible(true);
     }
 

@@ -12,7 +12,9 @@ public class HalamanKeluarTiket extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel barcodePanel = new JPanel();
-        barcodePanel.setBackground(new Color(245, 245, 245));
+        // barcodePanel.setBackground(new Color(245, 245, 245));
+        barcodePanel.setBackground(Color.WHITE);
+        barcodePanel.setOpaque(true);
         barcodePanel.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
         barcodePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
@@ -80,12 +82,21 @@ public class HalamanKeluarTiket extends JFrame {
         footerPanel.add(detailPanel, BorderLayout.CENTER);
 
         add(barcodePanel, BorderLayout.NORTH);
-        add(footerPanel, BorderLayout.CENTER);
+        // add(footerPanel, BorderLayout.CENTER);
+
+        JPanel detailPanel2 = new JPanel();
+        detailPanel2.setLayout(new BoxLayout(detailPanel2, BoxLayout.Y_AXIS));
+        detailPanel2.setBackground(Color.WHITE);
+        detailPanel2.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
+        detailPanel2.setPreferredSize(new Dimension(340, 400));
+        detailPanel2.setMaximumSize(new Dimension(340, 400));
 
         JPanel posterInfoPanel = new JPanel();
         posterInfoPanel.setLayout(new BoxLayout(posterInfoPanel, BoxLayout.Y_AXIS));
-        posterInfoPanel.setBackground(new Color(245, 245, 245));
-        posterInfoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        // posterInfoPanel.setBackground(new Color(245, 245, 245));
+        posterInfoPanel.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, Color.WHITE));
+        posterInfoPanel.setOpaque(true);
+        posterInfoPanel.setBackground(Color.WHITE);
 
         ImageIcon posterIcon = new ImageIcon(new ImageIcon("./Asset/contohPosterPesanTiket.jpg").getImage().getScaledInstance(140, 180, Image.SCALE_SMOOTH));
         JLabel posterLabel = new JLabel();
@@ -96,16 +107,48 @@ public class HalamanKeluarTiket extends JFrame {
         JLabel movieTitleLabel = new JLabel("Logbook 3 SIh ni", JLabel.CENTER);
         movieTitleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         movieTitleLabel.setForeground(new Color(70, 70, 70));
+        movieTitleLabel.setBackground(Color.WHITE);
+        movieTitleLabel.setOpaque(true);
         movieTitleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         posterInfoPanel.add(movieTitleLabel);
 
         JLabel movieDateLabel = new JLabel("7 Desember 2024", JLabel.CENTER);
         movieDateLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
         movieDateLabel.setForeground(new Color(120, 120, 120));
+        movieDateLabel.setBackground(Color.WHITE);
+        movieDateLabel.setOpaque(true);
         movieDateLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         posterInfoPanel.add(movieDateLabel);
 
-        add(posterInfoPanel, BorderLayout.SOUTH);
+        JLabel keteranganRefund = new JLabel("Tiket yang sudah dibeli tidak dapat dikembalikan", JLabel.CENTER);
+        keteranganRefund.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+        keteranganRefund.setForeground(Color.RED);
+        keteranganRefund.setBackground(Color.WHITE);
+        keteranganRefund.setOpaque(true);
+        keteranganRefund.setAlignmentX(Component.CENTER_ALIGNMENT);
+        posterInfoPanel.add(keteranganRefund);
+
+        JLabel keteranganTukar = new JLabel("Tukarkan tiket digital ini dengan tiket fisik di lokasi acara", JLabel.CENTER);
+        keteranganTukar.setFont(new Font("Segoe UI", Font.ITALIC, 12));
+        keteranganTukar.setForeground(Color.BLACK);
+        keteranganTukar.setBackground(Color.WHITE);
+        keteranganTukar.setOpaque(true);
+        keteranganTukar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        posterInfoPanel.add(keteranganTukar);
+
+        detailPanel2.add(posterInfoPanel, BorderLayout.SOUTH);
+        // add(detailPanel2, BorderLayout.SOUTH);
+
+        JPanel mainContentPanel = new JPanel();
+        mainContentPanel.setLayout(new BoxLayout(mainContentPanel, BoxLayout.Y_AXIS));
+        // mainContentPanel.setBackground(new Color(245, 245, 245));
+
+        mainContentPanel.add(footerPanel);
+
+        mainContentPanel.add(detailPanel2);
+
+        add(mainContentPanel, BorderLayout.CENTER);
+
 
         setVisible(true);
     }
