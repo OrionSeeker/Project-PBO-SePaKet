@@ -8,6 +8,7 @@ public class DetailMovie {
     private JFrame frame;
     private JPanel mainPanel;
     Movie movie;
+    int idJadwalTayang;
 
     public DetailMovie(Movie movie) {
         this.movie = movie;
@@ -19,56 +20,13 @@ public class DetailMovie {
 
         mainPanel = new JPanel(new BorderLayout());
 
-        mainPanel.add(createHeaderPanel(), BorderLayout.NORTH);
+        mainPanel.add(Head.createHeaderPanel(), BorderLayout.NORTH);
 
         mainPanel.add(createMainContentPanel(), BorderLayout.CENTER);
 
         frame.add(mainPanel, BorderLayout.CENTER);
 
         frame.setVisible(true);
-    }
-
-    private JPanel createHeaderPanel() {
-        // Load and scale background image
-        ImageIcon icon = new ImageIcon("asset/headerBaru.jpg");
-        // Mengambil gambar dari icon
-        Image img = icon.getImage();
-        // Mengubah ukuran gambar agar sesuai keinginan
-        Image imgScaled = img.getScaledInstance(1440, 150, Image.SCALE_SMOOTH);
-        // Mengubah gambar menjadi icon
-        ImageIcon iconScaled = new ImageIcon(imgScaled);
-        // Membuat label dengan iconScaled
-        JLabel headerLabel = new JLabel(iconScaled);
-        // Mengatur layout dari headerLabel menjadi BorderLayout
-        headerLabel.setLayout(new BorderLayout());
-
-        ImageIcon profile = new ImageIcon("Asset/Profil.png");
-        Image imgProfile = profile.getImage();
-        Image imgProfileScaled = imgProfile.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        ImageIcon profileScaled = new ImageIcon(imgProfileScaled);
-
-        JPanel profilePanel = new JPanel(new BorderLayout());
-        profilePanel.setOpaque(false);
-        profilePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 50));
-        JLabel profileLabel = new JLabel(profileScaled);
-        profileLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        profilePanel.add(profileLabel, BorderLayout.EAST);
-
-        headerLabel.add(profilePanel, BorderLayout.EAST);
-
-        profileLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                new Profile();
-            }
-        });
-
-        JPanel headerPanel = new JPanel(new BorderLayout());
-        // Menambahkan headerLabel ke headerPanel
-        headerPanel.add(headerLabel, BorderLayout.CENTER);
-        // Mengembalikan headerPanel
-
-        return headerPanel;
     }
 
     private JScrollPane createMainContentPanel() {
@@ -95,16 +53,14 @@ public class DetailMovie {
         // Mengatur tipe scrollbar untuk hanya muncul jika diperlukan
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // jika tidak ingin scroll
-                                                                                         // horizontal
 
-        // Mengembalikan scrollPane sebagai panel utama
         return scrollPane;
     }
 
     private JPanel createCategoryPanel(Movie movie) {
 
         JPanel gambarndetailFilm = new JPanel();
-        gambarndetailFilm.setBackground(Color.GRAY);
+        gambarndetailFilm.setBackground(new Color(217, 217, 217, 255));
 
         // Menggunakan GridLayout dengan 2 baris dan 1 kolom
         gambarndetailFilm.setLayout(new GridLayout(1, 2));
@@ -123,38 +79,38 @@ public class DetailMovie {
         gambarndetailFilm.add(posterLabel);
         // Panel untuk detail film di sebelah kanan
         JPanel detailPanel = new JPanel();
-        detailPanel.setBackground(Color.gray);
+        detailPanel.setBackground(new Color(217, 217, 217, 255));
         detailPanel.setLayout(new BoxLayout(detailPanel, BoxLayout.Y_AXIS));
 
         JLabel titleLabel = new JLabel("Title: " + movie.getTitle());
-        titleLabel.setFont(new Font("Arial", Font.PLAIN, 30));
+        titleLabel.setFont(new Font("Arial", Font.PLAIN, 25));
         titleLabel.setForeground(new Color(236, 157, 36, 255));
         titleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         // Label untuk menampilkan genre, tahun, rating, sutradara, dan deskripsi film
         JLabel genreLabel = new JLabel("Genre: " + movie.getGenre());
-        genreLabel.setFont(new Font("Arial", Font.PLAIN, 30));
+        genreLabel.setFont(new Font("Arial", Font.PLAIN, 25));
         genreLabel.setForeground(new Color(236, 157, 36, 255));
         genreLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JLabel yearLabel = new JLabel("Year: " + movie.getYear());
-        yearLabel.setFont(new Font("Arial", Font.PLAIN, 30));
+        yearLabel.setFont(new Font("Arial", Font.PLAIN, 25));
         yearLabel.setForeground(new Color(236, 157, 36, 255));
         yearLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JLabel directorLabel = new JLabel("Director: " + movie.getDirector());
-        directorLabel.setFont(new Font("Arial", Font.PLAIN, 30));
+        directorLabel.setFont(new Font("Arial", Font.PLAIN, 25));
         directorLabel.setForeground(new Color(236, 157, 36, 255));
         directorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JLabel desc = new JLabel("Description");
-        desc.setFont(new Font("Arial", Font.PLAIN, 30));
+        desc.setFont(new Font("Arial", Font.PLAIN, 25));
         desc.setForeground(new Color(236, 157, 36, 255));
         desc.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JTextArea descriptionArea = new JTextArea(movie.getDescription());
         descriptionArea.setFont(new Font("Arial", Font.PLAIN, 15));
         descriptionArea.setForeground(new Color(236, 157, 36, 255));
-        descriptionArea.setBackground(Color.GRAY);
+        descriptionArea.setBackground(new Color(217, 217, 217, 255));
         descriptionArea.setLineWrap(true);
         descriptionArea.setWrapStyleWord(true);
         descriptionArea.setEditable(false);
@@ -163,12 +119,15 @@ public class DetailMovie {
         // Menambahkan komponen ke detailPanel
         detailPanel.add(Box.createVerticalStrut(10));
         detailPanel.add(titleLabel);
+        detailPanel.add(Box.createVerticalStrut(3));
         detailPanel.add(genreLabel);
+        detailPanel.add(Box.createVerticalStrut(3));
         detailPanel.add(yearLabel);
-        // detailPanel.add(ratingLabel);
+        detailPanel.add(Box.createVerticalStrut(3));
         detailPanel.add(directorLabel);
-        detailPanel.add(Box.createVerticalStrut(10));
+        detailPanel.add(Box.createVerticalStrut(3));
         detailPanel.add(desc);
+        detailPanel.add(Box.createVerticalStrut(3));
         detailPanel.add(descriptionArea);
 
         gambarndetailFilm.add(detailPanel);
@@ -196,13 +155,18 @@ public class DetailMovie {
         return trailerPanel;
     }
 
+    // Tambahkan variabel untuk menyimpan referensi ke panel jamTayang
+    private JPanel jamTayangPanel;
+    private JPanel lastSelectedPanel = null; // Menyimpan referensi ke panel yang terakhir dipilih
+    private JPanel lastSelectedJamPanel = null;
+
     private JPanel jadwal() {
         JPanel jadwalMainPanel = new JPanel();
-        jadwalMainPanel.setBackground(Color.GRAY);
+        jadwalMainPanel.setBackground(new Color(217,217,217,255));
         jadwalMainPanel.setLayout(new BorderLayout());
 
         JPanel jadwalPanel = new JPanel();
-        jadwalPanel.setBackground(Color.GRAY);
+        jadwalPanel.setBackground(new Color(217,217,217,255));
         jadwalPanel.setLayout(new BoxLayout(jadwalPanel, BoxLayout.Y_AXIS));
 
         JLabel jadwalLabel = new JLabel("Jadwal");
@@ -210,102 +174,127 @@ public class DetailMovie {
         jadwalLabel.setForeground(new Color(236, 157, 36, 255));
         jadwalLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        ArrayList<String> jadwalTanggal = new ArrayList<>();
-        ArrayList<String> jadwalHari = new ArrayList<>();
-        jadwalTanggal.add("Senin");
-        jadwalHari.add("12 Juli");
-        jadwalTanggal.add("Selasa");
-        jadwalHari.add("13 Juli");
-        jadwalTanggal.add("Rabu");
-        jadwalHari.add("14 Juli");
-        jadwalTanggal.add("Kamis");
-        jadwalHari.add("15 Juli");
-        jadwalTanggal.add("Jumat");
-        jadwalHari.add("16 Juli");
-        jadwalTanggal.add("Sabtu");
-        jadwalHari.add("17 Juli");
-        jadwalTanggal.add("Minggu");
-        jadwalHari.add("18 Juli");
+        ArrayList<String> jadwalTanggalHari = ConnectKeDB.getTanggalHari(movie.getId());
 
         JPanel hariJam = new JPanel();
-        hariJam.setBackground(Color.GRAY);
+        hariJam.setBackground(new Color(217,217,217,255));
         hariJam.setLayout(new BoxLayout(hariJam, BoxLayout.X_AXIS));
         hariJam.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 10));
 
-        for (int j = 0; j < jadwalTanggal.size(); j++) {
+        // Menambahkan MouseListener untuk setiap hari
+        for (int j = 0; j < jadwalTanggalHari.size(); j++) {
             JPanel jadwalArea = new JPanel();
-            jadwalArea.setBackground(new Color(236, 157, 36, 255));
+            jadwalArea.setBackground(new Color(236, 157, 36, 255)); // Warna awal
             jadwalArea.setLayout(new BoxLayout(jadwalArea, BoxLayout.Y_AXIS));
-            JLabel hari = new JLabel(jadwalHari.get(j));
-            hari.setFont(new Font("Arial", Font.PLAIN, 7));
+            JLabel hari = new JLabel(jadwalTanggalHari.get(j));
+            hari.setFont(new Font("Arial", Font.PLAIN, 20));
             hari.setForeground(Color.WHITE);
             hari.setAlignmentX(Component.CENTER_ALIGNMENT);
-            JLabel tanggal = new JLabel(jadwalTanggal.get(j));
-            tanggal.setFont(new Font("Arial", Font.PLAIN, 10));
-            tanggal.setForeground(Color.WHITE);
-            tanggal.setAlignmentX(Component.CENTER_ALIGNMENT);
-            jadwalArea.add(Box.createVerticalStrut(3));
-            jadwalArea.add(tanggal);
             jadwalArea.add(Box.createVerticalStrut(3));
             jadwalArea.add(hari);
             jadwalArea.add(Box.createVerticalStrut(3));
             hariJam.add(jadwalArea);
             hariJam.add(Box.createHorizontalStrut(10));
+
+            // Menambahkan MouseListener untuk mengubah latar belakang dan menampilkan jam
+            // tayang
+            final String selectedDay = jadwalTanggalHari.get(j);
+            jadwalArea.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    // Ubah latar belakang jadwalArea yang dipilih
+                    if (lastSelectedPanel != null) {
+                        lastSelectedPanel.setBackground(new Color(236, 157, 36, 255)); // Kembalikan warna ke semula
+                    }
+                    jadwalArea.setBackground(new Color(47,47,128,255)); // Set warna latar belakang menjadi biru
+                    lastSelectedPanel = jadwalArea; // Simpan panel yang baru dipilih
+
+                    // Panggil metode untuk mendapatkan jam tayang berdasarkan hari yang dipilih
+                    tampilkanJamTayang(selectedDay);
+                }
+            });
         }
+
         JLabel jamTayangLabel = new JLabel("Jam Tayang");
         jamTayangLabel.setFont(new Font("Arial", Font.PLAIN, 30));
         jamTayangLabel.setForeground(new Color(236, 157, 36, 255));
         jamTayangLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        ArrayList<String> jadwalJam = new ArrayList<>();
-        jadwalJam.add("10:00");
-        jadwalJam.add("12:00");
-        jadwalJam.add("14:00");
-        jadwalJam.add("16:00");
-        jadwalJam.add("18:00");
-        jadwalJam.add("20:00");
-        jadwalJam.add("22:00");
+        // Panel untuk menampilkan jam tayang, awalnya kosong
+        jamTayangPanel = new JPanel();
+        jamTayangPanel.setBackground(new Color(217,217,217,255));
+        jamTayangPanel.setLayout(new BoxLayout(jamTayangPanel, BoxLayout.X_AXIS));
+        jamTayangPanel.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 10));
 
-        JPanel jamTayang = new JPanel();
-        jamTayang.setBackground(Color.GRAY);
-        jamTayang.setLayout(new BoxLayout(jamTayang, BoxLayout.X_AXIS));
-        jamTayang.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 10));
+        // Tombol untuk membeli tiket
+        ImageIcon poster = new ImageIcon("asset/tombolBeliTiket.png");
+        Image posterImg = poster.getImage();
+        Image posterImgScaled = posterImg.getScaledInstance(1320, 80, Image.SCALE_SMOOTH);
+        ImageIcon posterScaled = new ImageIcon(posterImgScaled);
+        JLabel tombolBeliTiket = new JLabel(posterScaled);
+        tombolBeliTiket.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                new BeliTiketFilm(idJadwalTayang); // Menampilkan form pembelian tiket
+            }
+        });
+        tombolBeliTiket.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        for (int j = 0; j < jadwalTanggal.size(); j++) {
+        // Menambahkan semua komponen ke dalam panel
+        jadwalPanel.add(jadwalLabel);
+        jadwalPanel.add(hariJam);
+        jadwalPanel.add(jamTayangLabel);
+        jadwalPanel.add(jamTayangPanel); // Gunakan jamTayangPanel yang sudah disimpan
+        jadwalPanel.add(tombolBeliTiket);
+        jadwalPanel.add(Box.createVerticalStrut(10));
+        jadwalMainPanel.add(jadwalPanel, BorderLayout.CENTER);
+
+        return jadwalMainPanel;
+    }
+
+    // Metode untuk menampilkan jam tayang berdasarkan hari yang dipilih
+    private void tampilkanJamTayang(String hari) {
+        // Ambil daftar jam tayang berdasarkan hari yang dipilih
+        ArrayList<jadwalTayang> jadwalJam = ConnectKeDB.getJamHari(hari, movie.getId());
+
+        // Bersihkan semua komponen lama di panel jamTayang
+        jamTayangPanel.removeAll();
+
+        // Tambahkan jam tayang yang sesuai dengan hari yang dipilih
+        for (int j = 0; j < jadwalJam.size(); j++) {
             JPanel jadwalArea = new JPanel();
             jadwalArea.setBackground(new Color(236, 157, 36, 255));
             jadwalArea.setLayout(new BoxLayout(jadwalArea, BoxLayout.Y_AXIS));
-            JLabel jam = new JLabel(jadwalJam.get(j));
-            jam.setFont(new Font("Arial", Font.PLAIN, 7));
+            JLabel jam = new JLabel(jadwalJam.get(j).getJamTanggal());
+            jam.setFont(new Font("Arial", Font.PLAIN, 20));
             jam.setForeground(Color.WHITE);
             jam.setAlignmentX(Component.CENTER_ALIGNMENT);
             jadwalArea.add(Box.createVerticalStrut(3));
             jadwalArea.add(jam);
             jadwalArea.add(Box.createVerticalStrut(3));
 
-            jamTayang.add(jadwalArea);
-            jamTayang.add(Box.createHorizontalStrut(10));
+            jamTayangPanel.add(jadwalArea);
+            jamTayangPanel.add(Box.createHorizontalStrut(10));
+            final int index = j;
+            jadwalArea.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    // Ubah latar belakang jadwalArea yang dipilih
+                    if (lastSelectedJamPanel != null) {
+                        lastSelectedJamPanel.setBackground(new Color(236, 157, 36, 255)); // Kembalikan warna ke semula
+                    }
+                    jadwalArea.setBackground(new Color(47,47,128,255)); // Set warna latar belakang menjadi biru
+                    lastSelectedJamPanel = jadwalArea; // Simpan panel yang baru dipilih
+
+                    // Simpan idJadwalTayang yang dipilih
+                    idJadwalTayang = jadwalJam.get(index).getId();
+                }
+            });
         }
 
-        ImageIcon poster = new ImageIcon("asset/tombolBeliTiket.png");
-        Image posterImg = poster.getImage();
-
-        // Mengubah ukuran poster sesuai dengan ukuran yang diinginkan
-        Image posterImgScaled = posterImg.getScaledInstance(1320, 80, Image.SCALE_SMOOTH);
-        ImageIcon posterScaled = new ImageIcon(posterImgScaled);
-
-        // Membuat JLabel untuk menampilkan poster
-        JLabel tombolBeliTiket = new JLabel(posterScaled);
-        tombolBeliTiket.setAlignmentX(Component.CENTER_ALIGNMENT);
-        jadwalPanel.add(jadwalLabel);
-        jadwalPanel.add(hariJam);
-        jadwalPanel.add(jamTayangLabel);
-        jadwalPanel.add(jamTayang);
-        jadwalPanel.add(tombolBeliTiket);
-        jadwalPanel.add(Box.createVerticalStrut(10));
-        jadwalMainPanel.add(jadwalPanel, BorderLayout.CENTER);
-
-        return jadwalMainPanel;
+        // Refresh panel untuk menampilkan jam tayang yang baru
+        jamTayangPanel.revalidate();
+        jamTayangPanel.repaint();
     }
 
 }

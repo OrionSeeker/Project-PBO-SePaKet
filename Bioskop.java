@@ -17,7 +17,7 @@ public class Bioskop {
 
         mainPanel = new JPanel(new BorderLayout());
 
-        mainPanel.add(createHeaderPanel(), BorderLayout.NORTH);
+        mainPanel.add(Head.createHeaderPanel(), BorderLayout.NORTH);
 
         mainPanel.add(createMainContentPanel(), BorderLayout.CENTER);
 
@@ -26,49 +26,6 @@ public class Bioskop {
         frame.setVisible(true);
     }
 
-    
-    private JPanel createHeaderPanel() {
-        // Load and scale background image
-        ImageIcon icon = new ImageIcon("asset/headerBaru.jpg");
-        // Mengambil gambar dari icon
-        Image img = icon.getImage();
-        // Mengubah ukuran gambar agar sesuai keinginan
-        Image imgScaled = img.getScaledInstance(1440, 150, Image.SCALE_SMOOTH);
-        // Mengubah gambar menjadi icon
-        ImageIcon iconScaled = new ImageIcon(imgScaled);
-        // Membuat label dengan iconScaled
-        JLabel headerLabel = new JLabel(iconScaled);
-        // Mengatur layout dari headerLabel menjadi BorderLayout
-        headerLabel.setLayout(new BorderLayout());
-
-        ImageIcon profile = new ImageIcon("Asset/Profil.png");
-        Image imgProfile = profile.getImage();
-        Image imgProfileScaled = imgProfile.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        ImageIcon profileScaled = new ImageIcon(imgProfileScaled);
-
-        JPanel profilePanel = new JPanel(new BorderLayout());
-        profilePanel.setOpaque(false);
-        profilePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 50));
-        JLabel profileLabel = new JLabel(profileScaled);
-        profileLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        profilePanel.add(profileLabel, BorderLayout.EAST);
-
-        headerLabel.add(profilePanel, BorderLayout.EAST);
-
-        profileLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                new Profile();
-            }
-        });
-
-        JPanel headerPanel = new JPanel(new BorderLayout());
-        // Menambahkan headerLabel ke headerPanel
-        headerPanel.add(headerLabel, BorderLayout.CENTER);
-        // Mengembalikan headerPanel
-
-        return headerPanel;
-    }
 
     private JScrollPane createMainContentPanel() {
         // Membuat panel utama untuk konten
@@ -91,9 +48,7 @@ public class Bioskop {
         // Mengatur tipe scrollbar untuk hanya muncul jika diperlukan
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // jika tidak ingin scroll
-                                                                                         // horizontal
 
-        // Mengembalikan scrollPane sebagai panel utama
         return scrollPane;
     }
 
@@ -128,6 +83,7 @@ public class Bioskop {
         JPanel headCategory = new JPanel(new BorderLayout());
         headCategory.add(categoryLabel, BorderLayout.CENTER);
         headCategory.add(lihatSemua, BorderLayout.EAST);
+        headCategory.setBackground(new Color(217,217,217,255));
         headCategory.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
         categoryPanel.add(headCategory, BorderLayout.NORTH);
 
@@ -137,12 +93,12 @@ public class Bioskop {
         movieListPanel.setBackground(Color.WHITE);
 
         // Menambahkan setiap film ke dalam movieListPanel
-        // JPanel moviePanel = new JPanel();
         JPanel moviePanel = new JPanel();
         moviePanel.setLayout(new BoxLayout(moviePanel, BoxLayout.X_AXIS)); // Mengatur layout vertikal
         moviePanel.setBorder(BorderFactory.createEmptyBorder(0, 40, 20, 20));
-        moviePanel.setBackground(new Color(217,217,217,100));
+        moviePanel.setBackground(new Color(217,217,217,255));
         moviePanel.add(Box.createHorizontalStrut(30));
+        int i = 0;
         for (Movie movie : movieList) {
             // Mengambil gambar poster film
             ImageIcon poster = new ImageIcon(movie.getImage());
@@ -167,7 +123,10 @@ public class Bioskop {
 
             // Menambahkan sedikit jarak antar poster untuk estetika
             moviePanel.add(Box.createHorizontalStrut(50)); // Spasi antar gambar poster (dalam px)
-
+            i++;
+            if (i == 4) {
+                break;
+            }
         }
 
         categoryPanel.add(moviePanel, BorderLayout.CENTER);
