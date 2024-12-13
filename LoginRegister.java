@@ -179,6 +179,7 @@ public class LoginRegister extends JFrame {
                             JFrame frameBeranda = new Beranda();
                             frameBeranda.setVisible(true);
                             frameBeranda.setLocationRelativeTo(null);
+                            user.id = rs.getInt("id");
                         }
                         else {
                             JOptionPane.showMessageDialog(this, "User name atau Password salah!!!!", "Login Gagal", JOptionPane.ERROR_MESSAGE);

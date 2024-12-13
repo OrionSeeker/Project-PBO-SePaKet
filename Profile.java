@@ -7,6 +7,7 @@ public class Profile extends JFrame {
         // Konfigurasi frame
         setTitle("Profile");
         setSize(1440, 1080);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 

@@ -121,7 +121,7 @@ public class Beranda extends JFrame {
         for (String item : items) {
             RoundedButton button = new RoundedButton(item);
             button.addActionListener(e -> {
-                new DetailFrame(item, "Deskripsi detail untuk " + item);
+                new Bioskop();
             });
             buttonPanel.add(button);
         }

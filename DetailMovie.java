@@ -9,6 +9,7 @@ public class DetailMovie {
     private JPanel mainPanel;
     Movie movie;
     int idJadwalTayang;
+    boolean beliTiket = false;
 
     public DetailMovie(Movie movie) {
         this.movie = movie;
@@ -162,11 +163,11 @@ public class DetailMovie {
 
     private JPanel jadwal() {
         JPanel jadwalMainPanel = new JPanel();
-        jadwalMainPanel.setBackground(new Color(217,217,217,255));
+        jadwalMainPanel.setBackground(new Color(217, 217, 217, 255));
         jadwalMainPanel.setLayout(new BorderLayout());
 
         JPanel jadwalPanel = new JPanel();
-        jadwalPanel.setBackground(new Color(217,217,217,255));
+        jadwalPanel.setBackground(new Color(217, 217, 217, 255));
         jadwalPanel.setLayout(new BoxLayout(jadwalPanel, BoxLayout.Y_AXIS));
 
         JLabel jadwalLabel = new JLabel("Jadwal");
@@ -177,7 +178,7 @@ public class DetailMovie {
         ArrayList<String> jadwalTanggalHari = ConnectKeDB.getTanggalHari(movie.getId());
 
         JPanel hariJam = new JPanel();
-        hariJam.setBackground(new Color(217,217,217,255));
+        hariJam.setBackground(new Color(217, 217, 217, 255));
         hariJam.setLayout(new BoxLayout(hariJam, BoxLayout.X_AXIS));
         hariJam.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 10));
 
@@ -206,9 +207,9 @@ public class DetailMovie {
                     if (lastSelectedPanel != null) {
                         lastSelectedPanel.setBackground(new Color(236, 157, 36, 255)); // Kembalikan warna ke semula
                     }
-                    jadwalArea.setBackground(new Color(47,47,128,255)); // Set warna latar belakang menjadi biru
+                    jadwalArea.setBackground(new Color(47, 47, 128, 255)); // Set warna latar belakang menjadi biru
                     lastSelectedPanel = jadwalArea; // Simpan panel yang baru dipilih
-
+                    beliTiket=false;
                     // Panggil metode untuk mendapatkan jam tayang berdasarkan hari yang dipilih
                     tampilkanJamTayang(selectedDay);
                 }
@@ -222,7 +223,7 @@ public class DetailMovie {
 
         // Panel untuk menampilkan jam tayang, awalnya kosong
         jamTayangPanel = new JPanel();
-        jamTayangPanel.setBackground(new Color(217,217,217,255));
+        jamTayangPanel.setBackground(new Color(217, 217, 217, 255));
         jamTayangPanel.setLayout(new BoxLayout(jamTayangPanel, BoxLayout.X_AXIS));
         jamTayangPanel.setBorder(BorderFactory.createEmptyBorder(10, 25, 10, 10));
 
@@ -235,7 +236,11 @@ public class DetailMovie {
         tombolBeliTiket.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                new BeliTiketFilm(idJadwalTayang); // Menampilkan form pembelian tiket
+                if (beliTiket == true) {
+                    new BeliTiketFilm(idJadwalTayang); // Menampilkan form pembelian tiket
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Pilih Jadwal Terlebih Dahulu");
+                }
             }
         });
         tombolBeliTiket.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -283,9 +288,10 @@ public class DetailMovie {
                     if (lastSelectedJamPanel != null) {
                         lastSelectedJamPanel.setBackground(new Color(236, 157, 36, 255)); // Kembalikan warna ke semula
                     }
-                    jadwalArea.setBackground(new Color(47,47,128,255)); // Set warna latar belakang menjadi biru
+                    jadwalArea.setBackground(new Color(47, 47, 128, 255)); // Set warna latar belakang menjadi biru
                     lastSelectedJamPanel = jadwalArea; // Simpan panel yang baru dipilih
 
+                    beliTiket = true;
                     // Simpan idJadwalTayang yang dipilih
                     idJadwalTayang = jadwalJam.get(index).getId();
                 }
