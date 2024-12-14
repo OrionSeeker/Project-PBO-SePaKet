@@ -166,6 +166,107 @@ public class ConnectKeDB {
             e.printStackTrace();
         }
     }
-    
+    public static ArrayList<Konser> getKonser(String status) {
+        ArrayList<Konser> konser = new ArrayList<>();
+        String query = "SELECT * FROM konser WHERE status = '" + status + "'";
+        try (Connection conn = getConnection();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                String image = rs.getString("image");
+                String date = rs.getString("date");
+                konser.add(new Konser(id, title, description, image, status, date));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return konser;
+    }
+
+    public static ArrayList<Kesenian> getKesenian(String status) {
+        ArrayList<Kesenian> kesenian = new ArrayList<>();
+        String query = "SELECT * FROM kesenian WHERE status = '" + status + "'";
+        try (Connection conn = getConnection();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                String image = rs.getString("image");
+                String date = rs.getString("date");
+                String lokasi = rs.getString("lokasi");
+                kesenian.add(new Kesenian(id, title, description, image, status, date, lokasi));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return kesenian;
+    }
+
+    public static void beliTiketKonserKesenian(int idUser, String nama, String NIK, String email, String jenisTiket, int jumlahTiket, String namaTiket) {
+        try (Connection conn = ConnectKeDB.getConnection()) {
+            String querySearch1 = "SELECT id FROM konser WHERE title = ?";
+            String querySearch2 = "SELECT id FROM kesenian WHERE title = ?";
+            String tipe = "";
+            try (PreparedStatement ps1 = conn.prepareStatement(querySearch1)) {
+                ps1.setString(1, namaTiket);
+                
+                ResultSet rs1 = ps1.executeQuery();
+                
+                int idAcara = -1;
+                
+                if (rs1.next()) {
+                    idAcara = rs1.getInt("id");
+                    tipe = "Konser";
+
+                }
+                else {
+                    try (PreparedStatement ps2 = conn.prepareStatement(querySearch2)) {
+                        ps2.setString(1, namaTiket);
+                        
+                        ResultSet rs2 = ps2.executeQuery();
+                        
+                        if (rs2.next()) {
+                            idAcara = rs2.getInt("id");
+                            tipe = "Kesenian";
+                        }
+                    }
+                }
+                if (idAcara == -1) {
+                    System.out.println("Tiket dengan nama " + namaTiket + " tidak ditemukan.");
+                    return;
+                }
+                
+                String queryInsert = "INSERT INTO tiketKonserSeni(id_user, nama, NIK, email, jenis_tiket, jumlah_tiket, id_acara, kategori) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                try (PreparedStatement psInsert = conn.prepareStatement(queryInsert)) {
+                    psInsert.setInt(1, idUser);
+                    psInsert.setString(2, nama);
+                    psInsert.setString(3, NIK);
+                    psInsert.setString(4, email);
+                    psInsert.setString(5, jenisTiket);
+                    psInsert.setInt(6, jumlahTiket);
+                    psInsert.setInt(7, idAcara);
+                    psInsert.setString(8, tipe);
+                    
+                    int rowsAffected = psInsert.executeUpdate();
+                    
+                    if (rowsAffected > 0) {
+                        System.out.println("Okeeeee");
+                    }
+                    else {
+                        System.out.println("Gagal insert");
+                    }
+                }
+                
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

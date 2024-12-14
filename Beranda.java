@@ -17,51 +17,48 @@ public class Beranda extends JFrame {
         setSize(1440, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        setLocationRelativeTo(null);
 
         // // Create header panel with image background
-        // JPanel headerPanel = new JPanel();
-        // headerPanel.setLayout(new BorderLayout());
-        // headerPanel.setPreferredSize(new Dimension(1440, 200));
+        JPanel headerPanel = new JPanel();
+        headerPanel.setLayout(new BorderLayout());
+        headerPanel.setPreferredSize(new Dimension(1440, 200));
 
-        // headerImageIcon = new ImageIcon("asset/HeaderBaru.jpg");
-        // headerImageLabel = new JLabel();
-        // headerImageLabel.setIcon(resizeHeaderImage(headerImageIcon, 1440, 200));
-        // headerImageLabel.setLayout(new BorderLayout());
+        headerImageIcon = new ImageIcon("asset/HeaderBaru.jpg");
+        headerImageLabel = new JLabel();
+        headerImageLabel.setIcon(resizeHeaderImage(headerImageIcon, 1440, 200));
+        headerImageLabel.setLayout(new BorderLayout());
 
-        // // Create right panel for profile button
-        // JPanel rightPanel = new JPanel(new GridBagLayout());
-        // rightPanel.setPreferredSize(new Dimension(250, 250));
-        // rightPanel.setOpaque(false);
+        // Create right panel for profile button
+        JPanel rightPanel = new JPanel(new GridBagLayout());
+        rightPanel.setPreferredSize(new Dimension(250, 250));
+        rightPanel.setOpaque(false);
 
-        // ImageIcon originalIcon = new ImageIcon("asset/profil.png");
-        // Image scaledImage = originalIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-        // ImageIcon buttonIcon = new ImageIcon(scaledImage);
+        ImageIcon originalIcon = new ImageIcon("asset/profil.png");
+        Image scaledImage = originalIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+        ImageIcon buttonIcon = new ImageIcon(scaledImage);
 
-        // JButton profileButton = new JButton(buttonIcon);
-        // profileButton.setPreferredSize(new Dimension(60, 60));
-        // profileButton.setBorderPainted(false);
-        // profileButton.setContentAreaFilled(false);
-        // profileButton.setFocusPainted(false);
+        JButton profileButton = new JButton(buttonIcon);
+        profileButton.setPreferredSize(new Dimension(60, 60));
+        profileButton.setBorderPainted(false);
+        profileButton.setContentAreaFilled(false);
+        profileButton.setFocusPainted(false);
 
-        // // Add mouse listener for profile button
-        // profileButton.addMouseListener(new MouseAdapter() {
-        //     @Override
-        //     public void mouseClicked(MouseEvent e) {
-        //         new Profile(userId);  // Pass userId to Profile frame
-        //     }
-        // });
+        // Add mouse listener for profile button
+        profileButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                new Profile(userId);  // Pass userId to Profile frame
+            }
+        });
 
-        // rightPanel.add(profileButton);
-        // headerImageLabel.add(rightPanel, BorderLayout.EAST);
-        // headerPanel.add(headerImageLabel, BorderLayout.CENTER);
+        rightPanel.add(profileButton);
+        headerImageLabel.add(rightPanel, BorderLayout.EAST);
+        headerPanel.add(headerImageLabel, BorderLayout.CENTER);
 
         // Add header panel to main frame
 
-        ActionListener backButtonListener = e -> {
-            // Entar isi ini back buttonnay ke mana
-        };
-
-        add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
+        add(headerPanel, BorderLayout.NORTH);
 
         // Main panel
         JPanel mainPanel = new JPanel();
@@ -130,10 +127,10 @@ public class Beranda extends JFrame {
                         new Bioskop(); 
                         break;
                     case "Kesenian":
-                        new detailKategori(userId); 
+                        new DaftarKesenian(); 
                         break;
                     case "Konser":
-                        new detailKategori(userId);
+                        new DaftarKonser();
                         break;
                     default:
                         break;
@@ -214,5 +211,9 @@ public class Beranda extends JFrame {
             Shape shape = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), 20, 20);
             return shape.contains(x, y);
         }
+    }
+
+    public static void main(String[] args) {
+        new Beranda(1);
     }
 }

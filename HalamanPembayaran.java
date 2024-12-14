@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class HalamanPembayaran extends JFrame {
 
-    public HalamanPembayaran(String nama, String NIK, String email, String jenisTiket, int jumlahTiket) {
+    public HalamanPembayaran(String nama, String NIK, String email, String jenisTiket, int jumlahTiket, String namatiket, String date, String img) {
 
         setTitle("Pembayaran Tiket");
         setSize(500, 400);
@@ -115,7 +115,7 @@ public class HalamanPembayaran extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
 
         konfirBtn.addActionListener(e -> {
-            JFrame tiket = new HalamanKeluarTiket(nama, NIK, email, jenisTiket, jumlahTiket);
+            JFrame tiket = new HalamanKeluarTiket(nama, NIK, email, jenisTiket, jumlahTiket, namatiket, date, img);
             tiket.setVisible(true);
             dispose();
         });

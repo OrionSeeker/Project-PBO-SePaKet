@@ -20,6 +20,15 @@ public class Movie {
         this.urlMovie = urlMovie;
         this.status = status;
     }
+
+    public Movie(int id, String title, String description, String image, String status){
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.image = image;
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }

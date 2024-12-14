@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class HalamanKeluarTiket extends JFrame {
 
-    public HalamanKeluarTiket(String nama, String NIK, String email, String jenisTiket, int jumlahTiket) {
+    public HalamanKeluarTiket(String nama, String NIK, String email, String jenisTiket, int jumlahTiket, String tiket, String tanggal, String img) {
         setTitle("Tiket Contoh aja siii...");
         setSize(360, 720);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -98,13 +98,13 @@ public class HalamanKeluarTiket extends JFrame {
         posterInfoPanel.setOpaque(true);
         posterInfoPanel.setBackground(Color.WHITE);
 
-        ImageIcon posterIcon = new ImageIcon(new ImageIcon("./Asset/contohPosterPesanTiket.jpg").getImage().getScaledInstance(140, 180, Image.SCALE_SMOOTH));
+        ImageIcon posterIcon = new ImageIcon(new ImageIcon(img).getImage().getScaledInstance(140, 180, Image.SCALE_SMOOTH));
         JLabel posterLabel = new JLabel();
         posterLabel.setIcon(posterIcon);
         posterLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         posterInfoPanel.add(posterLabel);
 
-        JLabel movieTitleLabel = new JLabel("Logbook 3 SIh ni", JLabel.CENTER);
+        JLabel movieTitleLabel = new JLabel(tiket, JLabel.CENTER);
         movieTitleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         movieTitleLabel.setForeground(new Color(70, 70, 70));
         movieTitleLabel.setBackground(Color.WHITE);
@@ -112,7 +112,7 @@ public class HalamanKeluarTiket extends JFrame {
         movieTitleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         posterInfoPanel.add(movieTitleLabel);
 
-        JLabel movieDateLabel = new JLabel("7 Desember 2024", JLabel.CENTER);
+        JLabel movieDateLabel = new JLabel(tanggal, JLabel.CENTER);
         movieDateLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
         movieDateLabel.setForeground(new Color(120, 120, 120));
         movieDateLabel.setBackground(Color.WHITE);
@@ -151,5 +151,7 @@ public class HalamanKeluarTiket extends JFrame {
 
 
         setVisible(true);
+        
+        ConnectKeDB.beliTiketKonserKesenian(user.id, nama, NIK, email, jenisTiket, jumlahTiket, tiket);
     }
 }

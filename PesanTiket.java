@@ -4,9 +4,9 @@ import java.io.*;
 import java.awt.event.*;
 
 public class PesanTiket extends JFrame {
-    private int userId;
+    // private int userId;
 
-    public PesanTiket() {
+    public PesanTiket(String title, String date, String img) {
         setTitle("SePaKet: Pesan Tiket Di Sini");
         setSize(1440, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -17,32 +17,6 @@ public class PesanTiket extends JFrame {
         Font customFont18 = loadFont("asset/Poppins-Bold.ttf", 18);
         Font customFont28 = loadFont("asset/Poppins-Bold.ttf", 28);
         Font customFont24 = loadFont("asset/Poppins-Bold.ttf", 24);
-
-        // ImageIcon gambarHeader = new ImageIcon(new ImageIcon("asset/headerBaru.jpg").getImage().getScaledInstance(1440, 300, Image.SCALE_SMOOTH));
-        // JLabel headerLabel = new JLabel(gambarHeader);
-        // headerLabel.setLayout(new BorderLayout());
-
-        // ImageIcon gambarProfil = new ImageIcon(new ImageIcon("Asset/Profil.png").getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
-        // JPanel profilePanel = new JPanel(new BorderLayout());
-        // profilePanel.setOpaque(false);
-        // profilePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 100, 100));
-        // JLabel profileLabel = new JLabel(gambarProfil);
-        // profileLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-
-        // // Tambahkan listener untuk membuka Profile.java
-        // profileLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-        //     public void mouseClicked(java.awt.event.MouseEvent evt) {
-        //         new Profile(userId); // Membuka Profile frame
-        //     }
-        // });
-
-        // profilePanel.add(profileLabel, BorderLayout.EAST);
-        // headerLabel.add(profilePanel, BorderLayout.EAST);
-
-        // JPanel headerPanel = new JPanel(new BorderLayout());
-        // headerPanel.add(headerLabel, BorderLayout.CENTER);
-        // add(headerPanel, BorderLayout.NORTH);
-        
 
         ActionListener backButtonListener = e -> {
             // Entar isi ini back buttonnay ke mana
@@ -75,18 +49,25 @@ public class PesanTiket extends JFrame {
         detailKonser.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
         detailKonser.setBackground(Color.WHITE);
 
-        ImageIcon posterIcon = new ImageIcon(new ImageIcon("asset/contohPosterPesanTiket.jpg").getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH));
+        ImageIcon posterIcon = new ImageIcon(new ImageIcon(img).getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH));
         JLabel posterLabel = new JLabel(posterIcon);
         posterLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel judulLabel = new JLabel("Hivi: Pesta Ceritera", SwingConstants.CENTER);
+        JLabel judulLabel = new JLabel(title, SwingConstants.CENTER);
         judulLabel.setFont(customFont24);
         judulLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel tanggalLabel = new JLabel(date, SwingConstants.CENTER);
+        tanggalLabel.setFont(customFont18);
+        tanggalLabel.setForeground(Color.GRAY);
+        tanggalLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         detailKonser.add(Box.createRigidArea(new Dimension(0, 20)));
         detailKonser.add(posterLabel);
         detailKonser.add(Box.createRigidArea(new Dimension(0, 10)));
         detailKonser.add(judulLabel);
+        detailKonser.add(Box.createRigidArea(new Dimension(0, 3)));
+        detailKonser.add(tanggalLabel);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -199,14 +180,14 @@ public class PesanTiket extends JFrame {
 
 
         pesanBtn.addActionListener(e -> {
-            JFrame frameKonfirm = new HalamanPembayaran(namaField.getText(), NIKField.getText(), emailField.getText(), (String) jenisTiketField.getSelectedItem(), (int) jumlahField.getValue());
+            JFrame frameKonfirm = new HalamanPembayaran(namaField.getText(), NIKField.getText(), emailField.getText(), (String) jenisTiketField.getSelectedItem(), (int) jumlahField.getValue(), title, date, img);
             frameKonfirm.setVisible(true);
         });
     }
 
-    public static void main(String[] args) {
-        new PesanTiket();
-    }
+    // public static void main(String[] args) {
+    //     new PesanTiket();
+    // }
 
     // Ini buat pake font poppins
     private Font loadFont(String path, float size) {
