@@ -13,13 +13,17 @@ public class Beranda extends JFrame {
 
     public Beranda(int userId) {
         this.userId = userId;  // Assign userId from LoginRegister
-        setTitle("SePaKet");
+        setTitle("SiPaket");
         setSize(1440, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);
 
+<<<<<<< HEAD
         // // Create header panel with image background
+=======
+        // Create header panel with image background
+>>>>>>> 5744defd5461e992496653f412c48161e8917807
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setPreferredSize(new Dimension(1440, 200));
@@ -57,7 +61,10 @@ public class Beranda extends JFrame {
         headerPanel.add(headerImageLabel, BorderLayout.CENTER);
 
         // Add header panel to main frame
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5744defd5461e992496653f412c48161e8917807
         add(headerPanel, BorderLayout.NORTH);
 
         // Main panel
