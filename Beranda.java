@@ -56,7 +56,7 @@ public class Beranda extends JFrame {
         headerPanel.add(headerImageLabel, BorderLayout.CENTER);
 
         // Add header panel to main frame
-        add(headerPanel, BorderLayout.NORTH);
+        add(Head.createHeaderPanel(), BorderLayout.NORTH);
 
         // Main panel
         JPanel mainPanel = new JPanel();
@@ -122,7 +122,7 @@ public class Beranda extends JFrame {
                 // Buka frame sesuai kategori
                 switch (item) {
                     case "Film":
-                        new detailKategori(userId); 
+                        new Bioskop(); 
                         break;
                     case "Kesenian":
                         new detailKategori(userId); 

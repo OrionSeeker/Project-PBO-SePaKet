@@ -2,15 +2,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class BeliTiketFilm {
     private JFrame frame;
     private JPanel mainPanel;
-    private int totalHarga = 0; // Variabel untuk menyimpan total harga
+    private int totalHarga = 0; 
     private JLabel hargaLabel;
     private int idJamTayang;
-    ArrayList<Seat> pesanan = new ArrayList<>();
+    private ArrayList<Seat> pesanan = new ArrayList<>();
+    private int countdownTime = 60; 
+    private Thread timerThread;
 
     public BeliTiketFilm(int idJamTayang) {
         this.idJamTayang = idJamTayang;
@@ -20,12 +24,22 @@ public class BeliTiketFilm {
         frame.setLayout(new BorderLayout());
         frame.setLocationRelativeTo(null);
 
+        // Tambahkan WindowListener untuk menghentikan thread saat frame ditutup
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                stopTimerThread();
+            }
+        });
+
         mainPanel = new JPanel(new BorderLayout());
 
         mainPanel.add(Head.createHeaderPanel(), BorderLayout.NORTH);
         mainPanel.add(createMainContentPanel(), BorderLayout.CENTER);
         frame.add(mainPanel, BorderLayout.CENTER);
         frame.setVisible(true);
+
+        startTimerThread();
     }
 
     private JScrollPane createMainContentPanel() {
@@ -226,11 +240,11 @@ public class BeliTiketFilm {
                     if (i == pesanan.size() - 1) {
                         bool = true;
                     }
-                    ConnectKeDB.setSeat(seat.getIdJadwalTayang(), seat.getNoKursi(), seat.getTempatDuduk(), user.id,
-                            totalHarga, bool);
+                    ConnectKeDB.setSeat(seat.getIdJadwalTayang(), seat.getNoKursi(), seat.getTempatDuduk(), user.id, totalHarga, bool);
                     i++;
                 }
                 JOptionPane.showMessageDialog(frame, pesanan.size() + " Kursi berhasil dibeli");
+                stopTimerThread(); // Hentikan timer saat tiket berhasil dibeli
                 frame.dispose(); // Menutup frame
             }
         });
@@ -257,4 +271,29 @@ public class BeliTiketFilm {
         hargaLabel.setText("Rp. " + totalHarga); // Update label dengan harga total
     }
 
+    private void startTimerThread() {
+        timerThread = new Thread(() -> {
+            try {
+                for (int i = countdownTime; i >= 0; i--) {
+                    if (Thread.currentThread().isInterrupted()) {
+                        return;
+                    }
+                    System.out.println("Timer: " + i + " detik");
+                    Thread.sleep(1000); // Tunggu 1 detik
+                }
+                System.out.println("Waktu selesai!");
+                JOptionPane.showMessageDialog(null, "Waktu pembelian tiket telah habis");
+                frame.dispose();
+            } catch (InterruptedException e) {
+                System.out.println("Timer terganggu!");
+            }
+        });
+        timerThread.start();
+    }
+
+    private void stopTimerThread() {
+        if (timerThread != null && timerThread.isAlive()) {
+            timerThread.interrupt();
+        }
+    }
 }

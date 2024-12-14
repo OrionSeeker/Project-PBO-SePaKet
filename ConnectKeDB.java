@@ -26,9 +26,9 @@ public class ConnectKeDB {
                 String genre = rs.getString("genre");
                 String description = rs.getString("description");
                 String image = rs.getString("image");
-                String pathMovie = rs.getString("pathMovie");
+                String urlMovie = rs.getString("urlMovie");
                 // Menambahkan data lagu ke ArrayList
-                movies.add(new Movie(id, title, director, year, genre, description, image, pathMovie, status));
+                movies.add(new Movie(id, title, director, year, genre, description, image, urlMovie, status));
             }
         } catch (SQLException e) {
             e.printStackTrace();

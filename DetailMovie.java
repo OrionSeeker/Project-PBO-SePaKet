@@ -141,14 +141,17 @@ public class DetailMovie {
         trailerPanel.setLayout(new BorderLayout());
 
         JButton playButton = new JButton("Play Trailer");
-        playButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        playButton.setFont(new Font("Arial", Font.PLAIN, 20));
         playButton.setForeground(Color.WHITE);
-        playButton.setBackground(Color.RED);
+        playButton.setBackground(new Color(236, 157, 36, 255));
         playButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         playButton.addActionListener(e -> {
-            // Play trailer here
-            System.out.println("Playing trailer...");
+            try {
+                Desktop.getDesktop().browse(new java.net.URI(movie.getUrlMovie()));
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         });
 
         trailerPanel.add(playButton, BorderLayout.CENTER);
