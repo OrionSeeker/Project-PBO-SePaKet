@@ -24,17 +24,6 @@ public class PesanTiket extends JFrame {
 
         add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
 
-        ImageIcon backIcon = new ImageIcon(new ImageIcon("asset/backButtonTakTrans.png").getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
-        JButton backBtn = new JButton(backIcon);
-        backBtn.setBorder(BorderFactory.createEmptyBorder(0, 10, 100, 200));
-        backBtn.setContentAreaFilled(false);
-        backBtn.setFocusable(false);
-
-        // JPanel backBtnPanel = new JPanel(new BorderLayout());
-        // backBtnPanel.setOpaque(false);
-        // backBtnPanel.add(backBtn, BorderLayout.WEST);
-        // headerLabel.add(backBtnPanel, BorderLayout.WEST);
-
         // Main panel ini sebenernya isi utamanya, yang ada poster sama form untuk pesen
         JPanel mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
