@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class LoadingScreen {
-    public static void main(String[] args) {
+    public LoadingScreen(){
         JFrame frame = new JFrame("SePaKet: Sistem Pemesanan Tiket");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(720,360);
@@ -73,6 +73,5 @@ public class LoadingScreen {
         frame.setLocationRelativeTo(null);
         
         loadingBarThread.start();
-    }
-    
+    }    
 }

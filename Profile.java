@@ -1,10 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.*;
 
 public class Profile extends JFrame {
-    public Profile() {
-        // Konfigurasi frame
+    private int userId;  // Store the user ID
+    
+    public Profile(int userId) {
+        this.userId = userId;  // Pass the user ID from the Beranda class
         setTitle("Profile");
         setSize(1440, 1080);
         setLocationRelativeTo(null);
@@ -14,7 +17,7 @@ public class Profile extends JFrame {
         // Panel atas untuk tombol kembali
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBackground(new Color(47, 47, 128));
-        
+
         // Membuat tombol kembali
         JButton backButton = createIconButton("asset/backButtonOren.png", 80, 80);
         if (backButton != null) {
@@ -34,30 +37,68 @@ public class Profile extends JFrame {
             centerPanel.add(profileImage);
         }
 
-        JLabel nameLabel = new JLabel("Username");
-        nameLabel.setFont(new Font("Arial", Font.BOLD, 30));
-        nameLabel.setForeground(Color.WHITE);
-        nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JLabel editProfileLabel = new JLabel("Edit Profile");
-        editProfileLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-        editProfileLabel.setForeground(Color.WHITE);
-        editProfileLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        editProfileLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(Profile.this, "Fungsi Edit Profile belum diimplementasikan!");
-            }
-        });
-
-        centerPanel.add(nameLabel);
-        centerPanel.add(Box.createVerticalStrut(10));
-        centerPanel.add(editProfileLabel);
+        // Fetch user data based on the userId
+        loadUserData(centerPanel);
 
         add(topPanel, BorderLayout.NORTH);
         add(centerPanel, BorderLayout.CENTER);
 
         setVisible(true);
+    }
+
+    // Method to load user-specific data (e.g., name)
+    private void loadUserData(JPanel centerPanel) {
+        try (Connection conn = ConnectKeDB.getConnection()) {
+            String query = "SELECT username FROM user WHERE id = ?";
+            try (PreparedStatement st = conn.prepareStatement(query)) {
+                st.setInt(1, userId);
+
+                try (ResultSet rs = st.executeQuery()) {
+                    if (rs.next()) {
+                        String username = rs.getString("username");
+                        JLabel nameLabel = new JLabel(username);
+                        nameLabel.setFont(new Font("Arial", Font.BOLD, 30));
+                        nameLabel.setForeground(Color.WHITE);
+                        nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                        JLabel editProfileLabel = new JLabel("Edit Profile");
+                        editProfileLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+                        editProfileLabel.setForeground(Color.WHITE);
+                        editProfileLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        editProfileLabel.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                new EditProfile(userId);
+                            }
+                        });
+
+                        // Log Out Label
+                        JLabel logOutLabel = new JLabel("Log Out");
+                        logOutLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+                        logOutLabel.setForeground(Color.WHITE);
+                        logOutLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        logOutLabel.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                // Start the loading thread for log out
+                                new LoadingThread(Profile.this).start();
+                            }
+                        });
+
+                        centerPanel.add(nameLabel);
+                        centerPanel.add(Box.createVerticalStrut(10));
+                        centerPanel.add(editProfileLabel);
+                        centerPanel.add(Box.createVerticalStrut(10));
+                        centerPanel.add(logOutLabel);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "User tidak ditemukan.");
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Gagal memuat data pengguna.");
+        }
     }
 
     private JButton createIconButton(String imagePath, int width, int height) {

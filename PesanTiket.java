@@ -3,9 +3,9 @@ import java.awt.*;
 import java.io.*;
 
 public class PesanTiket extends JFrame {
+    private int userId;
 
     public PesanTiket() {
-
         setTitle("SePaKet: Pesan Tiket Di Sini");
         setSize(1440, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,7 +31,7 @@ public class PesanTiket extends JFrame {
         // Tambahkan listener untuk membuka Profile.java
         profileLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                new Profile(); // Membuka Profile frame
+                new Profile(userId); // Membuka Profile frame
             }
         });
 

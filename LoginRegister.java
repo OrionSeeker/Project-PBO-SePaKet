@@ -166,33 +166,31 @@ public class LoginRegister extends JFrame {
         loginBtn.addActionListener(e -> {
             String usn = usernameField.getText();
             String pwd = new String(passwordField.getPassword());
-
+        
             try (Connection conn = ConnectKeDB.getConnection()) {
                 String query = "SELECT * FROM user WHERE username = ? AND password = ?";
-                try (PreparedStatement st = conn.prepareStatement(query)){
+                try (PreparedStatement st = conn.prepareStatement(query)) {
                     st.setString(1, usn);
                     st.setString(2, pwd);
-
-                    try (ResultSet rs = st.executeQuery()){
-                        if (rs.next()){
+        
+                    try (ResultSet rs = st.executeQuery()) {
+                        if (rs.next()) {
                             JOptionPane.showMessageDialog(this, "Login Berhasil!");
-                            JFrame frameBeranda = new Beranda();
+                            JFrame frameBeranda = new Beranda(rs.getInt("id")); // Pass user ID to Beranda
                             frameBeranda.setVisible(true);
                             frameBeranda.setLocationRelativeTo(null);
                             user.id = rs.getInt("id");
-                        }
-                        else {
-                            JOptionPane.showMessageDialog(this, "User name atau Password salah!!!!", "Login Gagal", JOptionPane.ERROR_MESSAGE);
+                            dispose(); // Close the LoginRegister window
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Username atau Password salah!!!!", "Login Gagal", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 }
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
                 System.out.println("Gagal konek ke db");
             }
-        });
-
+        }); 
 
         registBtn.addActionListener(e -> {
             String usn = usernameField2.getText();

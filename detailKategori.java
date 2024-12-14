@@ -6,10 +6,15 @@ import java.awt.event.MouseEvent;
 public class detailKategori {
     private JFrame frame;
     private JPanel mainPanel;
+    private int userId;
+
+    public detailKategori(int userId) {
+        this.userId = userId;
+    }
 
     public void launchApp() {
         frame = new JFrame("Detail Kategori");
-        frame.setSize(1920, 1080);
+        frame.setSize(1440, 1080);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
@@ -30,7 +35,7 @@ public class detailKategori {
         // Mengambil gambar dari icon
         Image img = icon.getImage();
         // Mengubah ukuran gambar agar sesuai keinginan
-        Image imgScaled = img.getScaledInstance(1550, 320, Image.SCALE_SMOOTH);
+        Image imgScaled = img.getScaledInstance(1440, 200, Image.SCALE_SMOOTH);
         // Mengubah gambar menjadi icon
         ImageIcon iconScaled = new ImageIcon(imgScaled);
         // Membuat label dengan iconScaled
@@ -55,7 +60,7 @@ public class detailKategori {
         profileLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                new Profile();
+                new Profile(userId);
             }
         });
 
@@ -145,10 +150,5 @@ public class detailKategori {
         detail.add(detailGambar, BorderLayout.EAST);
         mainContentPanel.add(detail, BorderLayout.CENTER);
         return mainContentPanel;
-    }
-
-    public static void main(String[] args) {
-        detailKategori app = new detailKategori();
-        app.launchApp();
     }
 }
