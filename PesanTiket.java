@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.awt.event.*;
 
 public class PesanTiket extends JFrame {
     private int userId;
@@ -17,30 +18,37 @@ public class PesanTiket extends JFrame {
         Font customFont28 = loadFont("asset/Poppins-Bold.ttf", 28);
         Font customFont24 = loadFont("asset/Poppins-Bold.ttf", 24);
 
-        ImageIcon gambarHeader = new ImageIcon(new ImageIcon("asset/header.jpg").getImage().getScaledInstance(1440, 300, Image.SCALE_SMOOTH));
-        JLabel headerLabel = new JLabel(gambarHeader);
-        headerLabel.setLayout(new BorderLayout());
+        // ImageIcon gambarHeader = new ImageIcon(new ImageIcon("asset/headerBaru.jpg").getImage().getScaledInstance(1440, 300, Image.SCALE_SMOOTH));
+        // JLabel headerLabel = new JLabel(gambarHeader);
+        // headerLabel.setLayout(new BorderLayout());
 
-        ImageIcon gambarProfil = new ImageIcon(new ImageIcon("Asset/Profil.png").getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
-        JPanel profilePanel = new JPanel(new BorderLayout());
-        profilePanel.setOpaque(false);
-        profilePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 100, 100));
-        JLabel profileLabel = new JLabel(gambarProfil);
-        profileLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        // ImageIcon gambarProfil = new ImageIcon(new ImageIcon("Asset/Profil.png").getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+        // JPanel profilePanel = new JPanel(new BorderLayout());
+        // profilePanel.setOpaque(false);
+        // profilePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 100, 100));
+        // JLabel profileLabel = new JLabel(gambarProfil);
+        // profileLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
-        // Tambahkan listener untuk membuka Profile.java
-        profileLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                new Profile(userId); // Membuka Profile frame
-            }
-        });
+        // // Tambahkan listener untuk membuka Profile.java
+        // profileLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        //     public void mouseClicked(java.awt.event.MouseEvent evt) {
+        //         new Profile(userId); // Membuka Profile frame
+        //     }
+        // });
 
-        profilePanel.add(profileLabel, BorderLayout.EAST);
-        headerLabel.add(profilePanel, BorderLayout.EAST);
+        // profilePanel.add(profileLabel, BorderLayout.EAST);
+        // headerLabel.add(profilePanel, BorderLayout.EAST);
 
-        JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.add(headerLabel, BorderLayout.CENTER);
-        add(headerPanel, BorderLayout.NORTH);
+        // JPanel headerPanel = new JPanel(new BorderLayout());
+        // headerPanel.add(headerLabel, BorderLayout.CENTER);
+        // add(headerPanel, BorderLayout.NORTH);
+        
+
+        ActionListener backButtonListener = e -> {
+            // Entar isi ini back buttonnay ke mana
+        };
+
+        add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
 
         ImageIcon backIcon = new ImageIcon(new ImageIcon("asset/backButtonTakTrans.png").getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
         JButton backBtn = new JButton(backIcon);
@@ -48,10 +56,10 @@ public class PesanTiket extends JFrame {
         backBtn.setContentAreaFilled(false);
         backBtn.setFocusable(false);
 
-        JPanel backBtnPanel = new JPanel(new BorderLayout());
-        backBtnPanel.setOpaque(false);
-        backBtnPanel.add(backBtn, BorderLayout.WEST);
-        headerLabel.add(backBtnPanel, BorderLayout.WEST);
+        // JPanel backBtnPanel = new JPanel(new BorderLayout());
+        // backBtnPanel.setOpaque(false);
+        // backBtnPanel.add(backBtn, BorderLayout.WEST);
+        // headerLabel.add(backBtnPanel, BorderLayout.WEST);
 
         // Main panel ini sebenernya isi utamanya, yang ada poster sama form untuk pesen
         JPanel mainPanel = new JPanel(new GridBagLayout());

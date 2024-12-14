@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class LihatSemua {
@@ -18,7 +17,11 @@ public class LihatSemua {
 
         mainPanel = new JPanel(new BorderLayout());
 
-        mainPanel.add(Head.createHeaderPanel(), BorderLayout.NORTH);
+        ActionListener backButtonListener = e -> {
+            // Entar isi ini back buttonnay ke mana
+        };
+
+        mainPanel.add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
 
         mainPanel.add(createMainContentPanel(), BorderLayout.CENTER);
 

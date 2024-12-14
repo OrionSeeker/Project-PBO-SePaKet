@@ -4,6 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class BeliTiketFilm {
@@ -34,7 +35,11 @@ public class BeliTiketFilm {
 
         mainPanel = new JPanel(new BorderLayout());
 
-        mainPanel.add(Head.createHeaderPanel(), BorderLayout.NORTH);
+        ActionListener backButtonListener = e -> {
+            // Entar isi ini back buttonnay ke mana
+        };
+
+        mainPanel.add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
         mainPanel.add(createMainContentPanel(), BorderLayout.CENTER);
         frame.add(mainPanel, BorderLayout.CENTER);
         frame.setVisible(true);
