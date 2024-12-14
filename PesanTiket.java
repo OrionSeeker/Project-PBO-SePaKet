@@ -9,7 +9,7 @@ public class PesanTiket extends JFrame {
     public PesanTiket(String title, String date, String img) {
         setTitle("SePaKet: Pesan Tiket Di Sini");
         setSize(1440, 1080);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         setResizable(false);
@@ -19,7 +19,7 @@ public class PesanTiket extends JFrame {
         Font customFont24 = loadFont("asset/Poppins-Bold.ttf", 24);
 
         ActionListener backButtonListener = e -> {
-            // Entar isi ini back buttonnay ke mana
+            dispose();
         };
 
         add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);

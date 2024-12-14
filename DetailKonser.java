@@ -21,7 +21,7 @@ public class DetailKonser {
         mainPanel = new JPanel(new BorderLayout());
 
         ActionListener backButtonListener = e -> {
-            // Entar isi ini back buttonnay ke mana
+            frame.dispose();
         };
 
         mainPanel.add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
@@ -63,8 +63,10 @@ public class DetailKonser {
             new PesanTiket(konser.getTitle(), konser.getDate(), konser.getImage());
         });
     
-        buttonPanel.add(pesanTiketButton);  // Menambahkan tombol ke panel tombol
-    
+        if(!konser.getStatus().equals("Coming Soon")){
+            buttonPanel.add(pesanTiketButton);  // Menambahkan tombol ke panel tombol
+        }
+        
         // Menambahkan panel tombol ke mainContentPanel
         mainContentPanel.add(Box.createVerticalStrut(20));  // Memberikan ruang sebelum panel tombol
         mainContentPanel.add(buttonPanel);  // Menambahkan panel tombol ke panel utama

@@ -17,7 +17,7 @@ public class DaftarKonser {
         mainPanel = new JPanel(new BorderLayout());
 
         ActionListener backButtonListener = e -> {
-            // Entar isi ini back buttonnay ke mana
+            frame.dispose();
         };
         
         mainPanel.add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
@@ -64,7 +64,12 @@ public class DaftarKonser {
         lihatSemua.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                new LihatSemua(category);
+                if(category.equals("Sebentar Lagi")){
+                    new LihatSemuaKonser("Sedang Tayang");
+                }
+                else{
+                    new LihatSemuaKonser("Coming Soon");
+                }
             }
         });
 

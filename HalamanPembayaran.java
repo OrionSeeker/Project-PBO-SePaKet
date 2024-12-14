@@ -7,7 +7,7 @@ public class HalamanPembayaran extends JFrame {
 
         setTitle("Pembayaran Tiket");
         setSize(500, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         setResizable(false);

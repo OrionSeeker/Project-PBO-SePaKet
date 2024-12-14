@@ -21,7 +21,7 @@ public class DetailKesenian {
         mainPanel = new JPanel(new BorderLayout());
 
         ActionListener backButtonListener = e -> {
-            // Entar isi ini back buttonnay ke mana
+            frame.dispose();
         };
 
         mainPanel.add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
@@ -63,7 +63,10 @@ public class DetailKesenian {
             new PesanTiket(kesenian.getTitle(), kesenian.getDate(), kesenian.getImage());
         });
     
-        buttonPanel.add(pesanTiketButton);  // Menambahkan tombol ke panel tombol
+        if(!kesenian.getStatus().equals("Coming Soon")){
+            buttonPanel.add(pesanTiketButton);  // Menambahkan tombol ke panel tombol
+        }
+        
     
         // Menambahkan panel tombol ke mainContentPanel
         mainContentPanel.add(Box.createVerticalStrut(20));  // Memberikan ruang sebelum panel tombol

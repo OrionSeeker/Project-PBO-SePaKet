@@ -21,7 +21,7 @@ public class DetailMovie {
         mainPanel = new JPanel(new BorderLayout());
 
         ActionListener backButtonListener = e -> {
-            // Entar isi ini back buttonnay ke mana
+            frame.dispose();
         };
 
         mainPanel.add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
