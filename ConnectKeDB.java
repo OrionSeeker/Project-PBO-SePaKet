@@ -269,6 +269,57 @@ public class ConnectKeDB {
         }
     }
 
-    
+    public static ArrayList<tiketBioskop> getAllTiketBioskop(int idAkun) {
+        // Membuat objek ArrayList untuk menyimpan data lagu
+        // Query untuk mendapatkan semua data lagu dari database
+        String query = "SELECT tb.id AS idTiket,tb.tempatDuduk,jt.jamTanggal AS jadwal,jt.hari,jt.studio,mv.title, mv.image, ak.username FROM tiketbioskop tb JOIN jadwaltayang jt ON tb.idJadwalTayang = jt.id JOIN movie mv ON jt.idMovie = mv.id JOIN user ak ON tb.idAkun = ak.id where tb.idAkun = "
+                + idAkun + " AND tb.status = 'active'";
+        ArrayList<tiketBioskop> tiket = new ArrayList<tiketBioskop>();
+        // Membuat koneksi ke database
+        try (Connection conn = ConnectKeDB.getConnection();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query)) {
+            // Menambahkan data lagu ke ArrayList
+            while (rs.next()) {
+                String tempatDuduk = rs.getString("tempatDuduk");
+                String jadwal = rs.getString("jadwal");
+                String hari = rs.getString("hari");
+                String studio = rs.getString("studio");
+                String title = rs.getString("title");
+                String image = rs.getString("image");
+                String username = rs.getString("username");
+                tiket.add(new tiketBioskop(tempatDuduk, jadwal, hari, studio, title, image,username));
+            }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tiket;
+    }
+
+    public static ArrayList<tiketKonserSeni> getAllTiketKonserSeni(int idAkun, String kategori) {
+        String query = "SELECT tks.nama AS namaLengkap, tks.NIK, tks.email, tks.jumlah_tiket , tks.jenis_tiket AS jenisTiket, CASE WHEN tks.kategori = 'Konser' THEN k.date WHEN tks.kategori = 'Kesenian' THEN ks.date END AS jadwal, CASE WHEN tks.kategori = 'Konser' THEN k.image WHEN tks.kategori = 'Kesenian' THEN ks.image END AS image, CASE WHEN tks.kategori = 'Konser' THEN k.title WHEN tks.kategori = 'Kesenian' THEN ks.title END AS title FROM tiketkonserseni tks LEFT JOIN konser k ON tks.kategori = 'Konser' AND tks.id_acara = k.id LEFT JOIN kesenian ks ON tks.kategori = 'Kesenian' AND tks.id_acara = ks.id WHERE tks.id_user = "
+        + idAkun + " AND tks.kategori = '" + kategori + "'";
+        ArrayList<tiketKonserSeni> tiket = new ArrayList<tiketKonserSeni>();
+        try (Connection conn = ConnectKeDB.getConnection();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query)) {
+            // Menambahkan data lagu ke ArrayList
+            while (rs.next()) {
+                String namaLengkap = rs.getString("namaLengkap");
+                String nik = rs.getString("NIK");
+                String email = rs.getString("email");
+                String jenisTiket = rs.getString("jenisTiket");
+                String jumlahTiket = rs.getString("jumlah_tiket");
+                String jadwal = rs.getString("jadwal");
+                String image = rs.getString("image");
+                String title = rs.getString("title");
+                tiket.add(new tiketKonserSeni(namaLengkap, nik, email, jenisTiket, jumlahTiket, jadwal, image, title));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tiket;
+    }
 }

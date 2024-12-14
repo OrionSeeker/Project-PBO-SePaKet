@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Beranda extends JFrame {
-    private int userId; 
+    private int userId;
     private ImageIcon headerImageIcon;
     private JLabel headerImageLabel;
 
     public Beranda(int userId) {
-        this.userId = userId;  
+        this.userId = userId;
         setTitle("SiPaket");
         setSize(1440, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,11 +23,11 @@ public class Beranda extends JFrame {
         // Create header panel with image background
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
-        headerPanel.setPreferredSize(new Dimension(1440, 200));
+        headerPanel.setPreferredSize(new Dimension(1440, 150));
 
         headerImageIcon = new ImageIcon("asset/HeaderBaru.jpg");
-        headerImageLabel = new JLabel();
-        headerImageLabel.setIcon(resizeHeaderImage(headerImageIcon, 1440, 200));
+        headerImageLabel = new JLabel(headerImageIcon);
+        headerImageLabel.setIcon(resizeHeaderImage(headerImageIcon, 1440, 150));
         headerImageLabel.setLayout(new BorderLayout());
 
         // Create right panel for profile button
@@ -49,7 +49,7 @@ public class Beranda extends JFrame {
         profileButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                new Profile(userId);  // Pass userId to Profile frame
+                new Profile(userId); // Pass userId to Profile frame
             }
         });
 
@@ -69,26 +69,84 @@ public class Beranda extends JFrame {
         Font customFont = loadFont("asset/Poppins-Bold.ttf", 32);
 
         // Category panel
-        JPanel kategoriPanel = createPanel("Kategori", new String[]{"Film", "Kesenian", "Konser"});
+        JPanel kategoriPanel = createPanel("Kategori", new String[] { "Film", "Kesenian", "Konser" });
         kategoriPanel.setFont(customFont);
-        kategoriPanel.setPreferredSize(new Dimension(1440, 600));
-        kategoriPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0)); 
+        // kategoriPanel.setPreferredSize(new Dimension(1440, 600));
+        // kategoriPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
         mainPanel.add(kategoriPanel);
 
         // Bought ticket panel (Initially empty)
-        JPanel tiketDibeliPanel = createPanel("TIKET DIBELI", new String[]{});
-        tiketDibeliPanel.setFont(customFont);
-        tiketDibeliPanel.setPreferredSize(new Dimension(1440, 600));
-        tiketDibeliPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0)); 
-        mainPanel.add(tiketDibeliPanel);
+        JLabel titleLabel = new JLabel("TIKET DIBELI", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setForeground(new Color(0xEC9D24));
+        titleLabel.setBackground(Color.WHITE);
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
 
+        JPanel tiket = new JPanel();
+        tiket.setLayout(new BorderLayout());
+        tiket.setBackground(Color.WHITE);
+        // tiket.setPreferredSize(new Dimension(1440, 600));
+        tiket.add(titleLabel, BorderLayout.NORTH);
+
+        JPanel tiketTiket = new JPanel();
+        tiketTiket.setLayout(new GridBagLayout());
+        tiketTiket.setBackground(Color.WHITE);
+
+        // Create ticket panels
+
+        JPanel tiketBioskop = new JPanel(new BorderLayout());
+        tiketBioskop.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        tiketBioskop.setBackground(new Color(217, 217, 217, 255));
+        tiketBioskop.add(tiketBioskopPanel(userId), BorderLayout.CENTER);
+
+        tiketTiket.add(tiketBioskop);
+
+        JPanel tiketKesenian = new JPanel(new BorderLayout());
+        tiketKesenian.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        tiketKesenian.setBackground(new Color(217, 217, 217, 255));
+        tiketKesenian.add(tiketKonserSeniPanel(userId, "Kesenian"), BorderLayout.CENTER);
+
+        tiketTiket.add(Box.createHorizontalStrut(50));
+        tiketTiket.add(tiketKesenian);
+
+        JPanel tiketKonser = new JPanel(new BorderLayout());
+        tiketKonser.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        tiketKonser.setBackground(new Color(217, 217, 217, 255));
+        tiketKonser.add(tiketKonserSeniPanel(userId, "Konser"), BorderLayout.CENTER);
+
+        tiketTiket.add(Box.createHorizontalStrut(50));
+        tiketTiket.add(tiketKonser);
+
+        tiket.add(tiketTiket, BorderLayout.CENTER);
         // Add main panel to frame
-        add(mainPanel, BorderLayout.CENTER);
+        mainPanel.add(tiket);
+        JPanel footerPanel = new JPanel();
+        footerPanel.setBackground(Color.WHITE);
 
-        // Fetch user-specific data
-        loadUserData();
+        JLabel tampilkanSemuaTiket = new JLabel("Tampilkan Semua Tiket", SwingConstants.CENTER);
+        tampilkanSemuaTiket.setFont(new Font("Arial", Font.BOLD, 18));
+        tampilkanSemuaTiket.setForeground(new Color(0x2F2F80));
+        footerPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                new SemuaTiket(userId);
+            }
+        });
+        JPanel dalamFooterPanel = new JPanel();
+        dalamFooterPanel.setBackground(new Color(0xEC9D24));
+        dalamFooterPanel.setBorder(BorderFactory.createEmptyBorder(0, 500, 0, 500));
+        dalamFooterPanel.add(tampilkanSemuaTiket);
 
-        // Display the frame
+        footerPanel.add(dalamFooterPanel, BorderLayout.CENTER);
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+        mainPanel.add(footerPanel);
+
+        JScrollPane scrollPane = new JScrollPane(mainPanel);
+        // Mengatur tipe scrollbar untuk hanya muncul jika diperlukan
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // jika tidak ingin scroll
+        add(scrollPane, BorderLayout.CENTER);
+
         setVisible(true);
     }
 
@@ -108,29 +166,29 @@ public class Beranda extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.WHITE);
-    
+
         JLabel titleLabel = new JLabel(title, SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setForeground(new Color(0xEC9D24));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
         panel.add(titleLabel, BorderLayout.NORTH);
-    
+
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
         buttonPanel.setBackground(Color.WHITE);
-    
+
         for (String item : items) {
             RoundedButton button = new RoundedButton(item);
             button.addActionListener(e -> {
                 // Buka frame sesuai kategori
                 switch (item) {
                     case "Film":
-                        new Bioskop(); 
+                        new Bioskop();
                         break;
                     case "Kesenian":
-                        new detailKategori(userId); 
+                        new DaftarKesenian();
                         break;
                     case "Konser":
-                        new detailKategori(userId);
+                        new DaftarKonser();
                         break;
                     default:
                         break;
@@ -138,82 +196,9 @@ public class Beranda extends JFrame {
             });
             buttonPanel.add(button);
         }
-    
+
         panel.add(buttonPanel, BorderLayout.CENTER);
-        panel.setPreferredSize(new Dimension(1440, 440));
         return panel;
-    }
-
-    // Load user data from the database
-    private void loadUserData() {
-        try (Connection conn = ConnectKeDB.getConnection()) {
-            String query = "SELECT * FROM user WHERE id = ?";
-            try (PreparedStatement st = conn.prepareStatement(query)) {
-                st.setInt(1, userId);
-
-                try (ResultSet rs = st.executeQuery()) {
-                    if (rs.next()) {
-                        String username = rs.getString("username");
-                        System.out.println("Welcome, " + username);
-
-                        // Fetch tickets bought by the user
-                        String tiketQuery = "SELECT nama_tiket FROM tiketbioskop WHERE user_id = ? UNION SELECT nama_tiket FROM tiketkonserseni WHERE user_id = ?";
-                        try (PreparedStatement tiketSt = conn.prepareStatement(tiketQuery)) {
-                            tiketSt.setInt(1, userId);
-                            tiketSt.setInt(2, userId);
-                            
-                            try (ResultSet tiketRs = tiketSt.executeQuery()) {
-                                List<String> tiketList = new ArrayList<>();
-                                while (tiketRs.next()) {
-                                    String tiket = tiketRs.getString("nama_tiket");
-                                    tiketList.add(tiket);
-                                }
-
-                                // Call method to update panel with tickets
-                                updateTiketDibeliPanel(tiketList);
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private void updateTiketDibeliPanel(List<String> tiketList) {
-        // Create the updated ticket panel with dynamic ticket names
-        int maxTiketToShow = 3;
-        List<String> ticketsToShow = tiketList.size() > maxTiketToShow 
-                ? tiketList.subList(0, maxTiketToShow) 
-                : tiketList;
-
-        // Create the panel and update it
-        JPanel tiketDibeliPanel = createPanel("TIKET DIBELI", ticketsToShow.toArray(new String[0]));
-        tiketDibeliPanel.setPreferredSize(new Dimension(1440, 600));
-        
-        // If there are more than 3 tickets, add "See More" button
-        if (tiketList.size() > maxTiketToShow) {
-            JButton seeMoreButton = new JButton("Lihat Selengkapnya");
-            seeMoreButton.setFont(new Font("Arial", Font.BOLD, 18));
-            seeMoreButton.setBackground(new Color(0x2F2F80));
-            seeMoreButton.setForeground(Color.WHITE);
-            seeMoreButton.setFocusPainted(false);
-            seeMoreButton.setPreferredSize(new Dimension(300, 50));
-            seeMoreButton.addActionListener(e -> new SemuaTiket(userId)); // Show the full ticket list
-
-            // Add the "See More" button
-            JPanel buttonPanel = new JPanel();
-            buttonPanel.setBackground(Color.WHITE);
-            buttonPanel.add(seeMoreButton);
-            tiketDibeliPanel.add(buttonPanel, BorderLayout.SOUTH);
-        }
-
-        // Update the main frame with the new tiket panel
-        remove(tiketDibeliPanel);
-        add(tiketDibeliPanel, BorderLayout.CENTER);
-        revalidate();
-        repaint();
     }
 
     // Resize header image
@@ -228,22 +213,22 @@ public class Beranda extends JFrame {
         public RoundedButton(String text) {
             super(text);
             setFont(new Font("Arial", Font.BOLD, 18));
-            setPreferredSize(new Dimension(400, 165));  
-            setBackground(new Color(0x2F2F80));        
-            setForeground(Color.WHITE);                
+            setPreferredSize(new Dimension(400, 165));
+            setBackground(new Color(0x2F2F80));
+            setForeground(Color.WHITE);
             setFocusPainted(false);
             setBorderPainted(false);
-            setContentAreaFilled(false);               
+            setContentAreaFilled(false);
         }
 
         @Override
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            
+
             // Set button background color
             g2.setColor(getBackground());
-            
+
             // Draw button with rounded corners (20px)
             g2.fill(new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), 20, 20));
 
@@ -252,7 +237,7 @@ public class Beranda extends JFrame {
             FontMetrics fm = g2.getFontMetrics();
             int textWidth = fm.stringWidth(getText());
             int textHeight = fm.getAscent();
-            
+
             // Center the text in the button
             g2.drawString(getText(), (getWidth() - textWidth) / 2, (getHeight() + textHeight) / 2 - 5);
             g2.dispose();
@@ -264,5 +249,329 @@ public class Beranda extends JFrame {
             Shape shape = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), 20, 20);
             return shape.contains(x, y);
         }
+    }
+
+    private JPanel tiketBioskopPanel(int idAkun) {
+
+        String query = "SELECT tb.id AS idTiket,tb.tempatDuduk,jt.jamTanggal AS jadwal,jt.hari,jt.studio,mv.title, mv.image, ak.username FROM tiketbioskop tb JOIN jadwaltayang jt ON tb.idJadwalTayang = jt.id JOIN movie mv ON jt.idMovie = mv.id JOIN user ak ON tb.idAkun = ak.id where tb.idAkun = "
+                + idAkun + " AND tb.status = 'active'";
+        String tempatDuduk = "";
+        String jadwal = "";
+        String hari = "";
+        String studio = "";
+        String title = "";
+        String image = "";
+        String username = "";
+        // Membuat koneksi ke database
+        try (Connection conn = ConnectKeDB.getConnection();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query)) {
+            // Menambahkan data lagu ke ArrayList
+            while (rs.next()) {
+                tempatDuduk = rs.getString("tempatDuduk");
+                jadwal = rs.getString("jadwal");
+                hari = rs.getString("hari");
+                studio = rs.getString("studio");
+                title = rs.getString("title");
+                image = rs.getString("image");
+                username = rs.getString("username");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (title.equals("")) {
+            JPanel emptyPanel = new JPanel();
+            emptyPanel.setLayout(new BorderLayout());
+            emptyPanel.setBackground(Color.WHITE);
+            emptyPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
+            JLabel emptyLabel = new JLabel("Belum ada Tiket Bioskop yang dibeli", JLabel.CENTER);
+            emptyLabel.setFont(new Font("Arial", Font.BOLD, 17));
+            emptyLabel.setForeground(new Color(236, 157, 36, 255));
+            emptyLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
+            emptyPanel.add(emptyLabel, BorderLayout.CENTER);
+
+            return emptyPanel;
+        }
+        JPanel detailPanel = new JPanel();
+        detailPanel.setLayout(new BoxLayout(detailPanel, BoxLayout.Y_AXIS));
+        detailPanel.setBackground(Color.WHITE);
+        detailPanel.setBorder(BorderFactory.createEmptyBorder(0, 35, 0, 0));
+
+        JLabel titleLabel = new JLabel("Detail Pemesanan Tiket");
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        titleLabel.setForeground(new Color(70, 70, 70));
+        titleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 0));
+        detailPanel.add(titleLabel);
+
+        Font labelFont = new Font("Arial", Font.PLAIN, 14);
+        Color textColor = new Color(60, 60, 60);
+
+        JLabel namaLabel = new JLabel("Nama Pemesan: " + username);
+        namaLabel.setFont(labelFont);
+        namaLabel.setForeground(textColor);
+        namaLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        namaLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        detailPanel.add(namaLabel);
+
+        JLabel tempatDudukLabel = new JLabel("Tempat Duduk: " + tempatDuduk);
+        tempatDudukLabel.setFont(labelFont);
+        tempatDudukLabel.setForeground(textColor);
+        tempatDudukLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        tempatDudukLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        detailPanel.add(tempatDudukLabel);
+
+        JLabel studioLabel = new JLabel("Studio: " + studio);
+        studioLabel.setFont(labelFont);
+        studioLabel.setForeground(textColor);
+        studioLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        studioLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        detailPanel.add(studioLabel);
+
+        JLabel hariLabel = new JLabel("Hari: " + hari);
+        hariLabel.setFont(labelFont);
+        hariLabel.setForeground(textColor);
+        hariLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        hariLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        detailPanel.add(hariLabel);
+
+        JPanel detailPanel2 = new JPanel();
+        detailPanel2.setLayout(new BoxLayout(detailPanel2, BoxLayout.Y_AXIS));
+        detailPanel2.setBackground(Color.WHITE);
+
+        JPanel posterInfoPanel = new JPanel();
+        posterInfoPanel.setLayout(new BoxLayout(posterInfoPanel, BoxLayout.Y_AXIS));
+        // posterInfoPanel.setBackground(new Color(245, 245, 245));
+        posterInfoPanel.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, Color.WHITE));
+        posterInfoPanel.setOpaque(true);
+        posterInfoPanel.setBackground(Color.WHITE);
+
+        ImageIcon posterIcon = new ImageIcon(
+                new ImageIcon(image).getImage().getScaledInstance(140, 180, Image.SCALE_SMOOTH));
+        JLabel posterLabel = new JLabel();
+        posterLabel.setIcon(posterIcon);
+        posterLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        posterInfoPanel.add(posterLabel);
+
+        JLabel movieTitleLabel = new JLabel(title, JLabel.CENTER);
+        movieTitleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        movieTitleLabel.setForeground(new Color(70, 70, 70));
+        movieTitleLabel.setBackground(Color.WHITE);
+        movieTitleLabel.setOpaque(true);
+        movieTitleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        posterInfoPanel.add(movieTitleLabel);
+
+        JLabel movieDateLabel = new JLabel(jadwal, JLabel.CENTER);
+        movieDateLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+        movieDateLabel.setForeground(new Color(120, 120, 120));
+        movieDateLabel.setBackground(Color.WHITE);
+        movieDateLabel.setOpaque(true);
+        movieDateLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        posterInfoPanel.add(movieDateLabel);
+
+        JLabel keteranganRefund = new JLabel("Tiket yang sudah dibeli tidak dapat dikembalikan", JLabel.CENTER);
+        keteranganRefund.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+        keteranganRefund.setForeground(Color.RED);
+        keteranganRefund.setBackground(Color.WHITE);
+        keteranganRefund.setOpaque(true);
+        keteranganRefund.setAlignmentX(Component.CENTER_ALIGNMENT);
+        posterInfoPanel.add(keteranganRefund);
+
+        JLabel keteranganTukar = new JLabel("Tukarkan tiket digital ini dengan tiket fisik di lokasi bioskop",
+                JLabel.CENTER);
+        keteranganTukar.setFont(new Font("Segoe UI", Font.ITALIC, 12));
+        keteranganTukar.setForeground(Color.BLACK);
+        keteranganTukar.setBackground(Color.WHITE);
+        keteranganTukar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        posterInfoPanel.add(keteranganTukar);
+
+        detailPanel2.add(posterInfoPanel, BorderLayout.SOUTH);
+        // add(detailPanel2, BorderLayout.SOUTH);
+
+        JPanel mainContentPanel = new JPanel();
+        mainContentPanel.setLayout(new BorderLayout());
+        // mainContentPanel.setBackground(new Color(245, 245, 245));
+
+        mainContentPanel.add(detailPanel, BorderLayout.NORTH);
+
+        mainContentPanel.add(detailPanel2, BorderLayout.CENTER);
+
+        return mainContentPanel;
+    }
+
+    private JPanel tiketKonserSeniPanel(int idAkun, String kategori) {
+
+        String query = "SELECT tks.nama AS namaLengkap, tks.NIK, tks.email, tks.jumlah_tiket , tks.jenis_tiket AS jenisTiket, CASE WHEN tks.kategori = 'Konser' THEN k.date WHEN tks.kategori = 'Kesenian' THEN ks.date END AS jadwal, CASE WHEN tks.kategori = 'Konser' THEN k.image WHEN tks.kategori = 'Kesenian' THEN ks.image END AS image, CASE WHEN tks.kategori = 'Konser' THEN k.title WHEN tks.kategori = 'Kesenian' THEN ks.title END AS title FROM tiketkonserseni tks LEFT JOIN konser k ON tks.kategori = 'Konser' AND tks.id_acara = k.id LEFT JOIN kesenian ks ON tks.kategori = 'Kesenian' AND tks.id_acara = ks.id WHERE tks.id_user = " + idAkun + " AND tks.kategori = '" + kategori + "'";
+        String namaLengkap = "";
+        String nik = "";
+        String email = "";
+        String jenisTiket = "";
+        String jumlahTiket = "";
+        String jadwal = "";
+        String image = "";
+        String title = "";
+
+        // Membuat koneksi ke database
+        try (Connection conn = ConnectKeDB.getConnection();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query)) {
+            // Menambahkan data lagu ke ArrayList
+            while (rs.next()) {
+                namaLengkap = rs.getString("namaLengkap");
+                nik = rs.getString("NIK");
+                email = rs.getString("email");
+                jenisTiket = rs.getString("jenisTiket");
+                jumlahTiket = rs.getString("jumlah_tiket");
+                jadwal = rs.getString("jadwal");
+                image = rs.getString("image");
+                title = rs.getString("title");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (title.equals("")) {
+            JPanel emptyPanel = new JPanel();
+            emptyPanel.setLayout(new BorderLayout());
+            emptyPanel.setBackground(Color.WHITE);
+            emptyPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
+            JLabel emptyLabel = new JLabel("Belum ada Tiket " + kategori + " yang dibeli", JLabel.CENTER);
+            emptyLabel.setFont(new Font("Arial", Font.BOLD, 17));
+            emptyLabel.setForeground(new Color(236, 157, 36, 255));
+            emptyLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
+            emptyPanel.add(emptyLabel, BorderLayout.CENTER);
+
+            return emptyPanel;
+        }
+        ImageIcon gambarBarcode = new ImageIcon(
+                new ImageIcon("./Asset/barcode.png").getImage().getScaledInstance(320, 150, Image.SCALE_SMOOTH));
+        JLabel barcodeLabel = new JLabel();
+        barcodeLabel.setIcon(gambarBarcode);
+
+        JPanel detailPanel = new JPanel();
+        detailPanel.setLayout(new BoxLayout(detailPanel, BoxLayout.Y_AXIS));
+        detailPanel.setBackground(Color.WHITE);
+        detailPanel.setBorder(BorderFactory.createEmptyBorder(0, 35, 0, 0));
+
+        JLabel titleLabel = new JLabel("Detail Pemesanan Tiket");
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        titleLabel.setForeground(new Color(70, 70, 70));
+        titleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 0));
+        detailPanel.add(titleLabel);
+
+        Font labelFont = new Font("Arial", Font.PLAIN, 14);
+        Color textColor = new Color(60, 60, 60);
+
+        JLabel namaLabel = new JLabel("Nama Pemesan: " + namaLengkap);
+        namaLabel.setFont(labelFont);
+        namaLabel.setForeground(textColor);
+        namaLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        namaLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        detailPanel.add(namaLabel);
+
+        JLabel emailLabel = new JLabel("Email: " + email);
+        emailLabel.setFont(labelFont);
+        emailLabel.setForeground(textColor);
+        emailLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        emailLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        detailPanel.add(emailLabel);
+
+        JLabel nikLabel = new JLabel("NIK: " + nik);
+        nikLabel.setFont(labelFont);
+        nikLabel.setForeground(textColor);
+        nikLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        nikLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        detailPanel.add(nikLabel);
+
+        JLabel jenisTiketLabel = new JLabel("Jenis Tiket: " + jenisTiket);
+        jenisTiketLabel.setFont(labelFont);
+        jenisTiketLabel.setForeground(textColor);
+        jenisTiketLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        jenisTiketLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        detailPanel.add(jenisTiketLabel);
+
+        JLabel jumlahTiketLabel = new JLabel("Jumlah Tiket: " + jumlahTiket);
+        jumlahTiketLabel.setFont(labelFont);
+        jumlahTiketLabel.setForeground(textColor);
+        jumlahTiketLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        jumlahTiketLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        detailPanel.add(jumlahTiketLabel);
+
+        JPanel detailPanel2 = new JPanel();
+        detailPanel2.setLayout(new BoxLayout(detailPanel2, BoxLayout.Y_AXIS));
+        detailPanel2.setBackground(Color.WHITE);
+
+        JPanel posterInfoPanel = new JPanel();
+        posterInfoPanel.setLayout(new BoxLayout(posterInfoPanel, BoxLayout.Y_AXIS));
+        // posterInfoPanel.setBackground(new Color(245, 245, 245));
+        posterInfoPanel.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, Color.WHITE));
+        posterInfoPanel.setOpaque(true);
+        posterInfoPanel.setBackground(Color.WHITE);
+
+        ImageIcon posterIcon = new ImageIcon(
+                new ImageIcon(image).getImage().getScaledInstance(140, 180, Image.SCALE_SMOOTH));
+        JLabel posterLabel = new JLabel();
+        posterLabel.setIcon(posterIcon);
+        posterLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        posterInfoPanel.add(posterLabel);
+
+        JLabel movieTitleLabel = new JLabel(title, JLabel.CENTER);
+        movieTitleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        movieTitleLabel.setForeground(new Color(70, 70, 70));
+        movieTitleLabel.setBackground(Color.WHITE);
+        movieTitleLabel.setOpaque(true);
+        movieTitleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        posterInfoPanel.add(movieTitleLabel);
+
+        JLabel movieDateLabel = new JLabel(jadwal, JLabel.CENTER);
+        movieDateLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+        movieDateLabel.setForeground(new Color(120, 120, 120));
+        movieDateLabel.setBackground(Color.WHITE);
+        movieDateLabel.setOpaque(true);
+        movieDateLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        posterInfoPanel.add(movieDateLabel);
+
+        JLabel keteranganRefund = new JLabel("Tiket yang sudah dibeli tidak dapat dikembalikan", JLabel.CENTER);
+        keteranganRefund.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+        keteranganRefund.setForeground(Color.RED);
+        keteranganRefund.setBackground(Color.WHITE);
+        keteranganRefund.setOpaque(true);
+        keteranganRefund.setAlignmentX(Component.CENTER_ALIGNMENT);
+        posterInfoPanel.add(keteranganRefund);
+
+        JLabel keteranganTukar = new JLabel("Tukarkan tiket digital ini dengan tiket fisik di lokasi acara",
+                JLabel.CENTER);
+        keteranganTukar.setFont(new Font("Segoe UI", Font.ITALIC, 12));
+        keteranganTukar.setForeground(Color.BLACK);
+        keteranganTukar.setBackground(Color.WHITE);
+        keteranganTukar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        posterInfoPanel.add(keteranganTukar);
+
+        detailPanel2.add(posterInfoPanel, BorderLayout.SOUTH);
+        // add(detailPanel2, BorderLayout.SOUTH);
+
+        JPanel mainContentPanel = new JPanel();
+        mainContentPanel.setLayout(new BorderLayout());
+        // mainContentPanel.setBackground(new Color(245, 245, 245));
+        JPanel bungkusDetailPanel = new JPanel();
+        bungkusDetailPanel.setLayout(new BoxLayout(bungkusDetailPanel, BoxLayout.Y_AXIS));
+        bungkusDetailPanel.setBackground(Color.WHITE);
+
+        bungkusDetailPanel.add(barcodeLabel);
+        bungkusDetailPanel.add(detailPanel);
+        mainContentPanel.add(bungkusDetailPanel, BorderLayout.NORTH);
+
+        mainContentPanel.add(detailPanel2, BorderLayout.CENTER);
+
+        return mainContentPanel;
+    }
+
+    public static void main(String[] args) {
+        new Beranda(0);
     }
 }

@@ -220,4 +220,10 @@ public class LoginRegister extends JFrame {
         
     }
 
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new LoginRegister();
+            frame.setVisible(true);
+        });
+    }
 }

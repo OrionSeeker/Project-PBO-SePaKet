@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 14, 2024 at 03:31 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Waktu pembuatan: 14 Des 2024 pada 23.25
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jadwaltayang`
+-- Struktur dari tabel `jadwaltayang`
 --
 
 CREATE TABLE `jadwaltayang` (
@@ -36,7 +36,7 @@ CREATE TABLE `jadwaltayang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `jadwaltayang`
+-- Dumping data untuk tabel `jadwaltayang`
 --
 
 INSERT INTO `jadwaltayang` (`id`, `idMovie`, `jamTanggal`, `hari`, `studio`) VALUES
@@ -60,7 +60,7 @@ INSERT INTO `jadwaltayang` (`id`, `idMovie`, `jamTanggal`, `hari`, `studio`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kesenian`
+-- Struktur dari tabel `kesenian`
 --
 
 CREATE TABLE `kesenian` (
@@ -74,7 +74,7 @@ CREATE TABLE `kesenian` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `kesenian`
+-- Dumping data untuk tabel `kesenian`
 --
 
 INSERT INTO `kesenian` (`id`, `title`, `date`, `description`, `image`, `status`, `lokasi`) VALUES
@@ -85,7 +85,7 @@ INSERT INTO `kesenian` (`id`, `title`, `date`, `description`, `image`, `status`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `konser`
+-- Struktur dari tabel `konser`
 --
 
 CREATE TABLE `konser` (
@@ -98,7 +98,7 @@ CREATE TABLE `konser` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `konser`
+-- Dumping data untuk tabel `konser`
 --
 
 INSERT INTO `konser` (`id`, `title`, `date`, `description`, `image`, `status`) VALUES
@@ -111,7 +111,7 @@ INSERT INTO `konser` (`id`, `title`, `date`, `description`, `image`, `status`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `movie`
+-- Struktur dari tabel `movie`
 --
 
 CREATE TABLE `movie` (
@@ -127,7 +127,7 @@ CREATE TABLE `movie` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `movie`
+-- Dumping data untuk tabel `movie`
 --
 
 INSERT INTO `movie` (`id`, `title`, `direction`, `year`, `genre`, `description`, `image`, `urlMovie`, `status`) VALUES
@@ -143,7 +143,7 @@ INSERT INTO `movie` (`id`, `title`, `direction`, `year`, `genre`, `description`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `seat`
+-- Struktur dari tabel `seat`
 --
 
 CREATE TABLE `seat` (
@@ -155,11 +155,15 @@ CREATE TABLE `seat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `seat`
+-- Dumping data untuk tabel `seat`
 --
 
 INSERT INTO `seat` (`idJadwalTayang`, `noKursi`, `status`, `tempatDuduk`, `atributBantu`) VALUES
 (3, 1, 0, 'A1', 'sudah'),
+(3, 7, 0, 'A7', 'sudah'),
+(3, 8, 0, 'A8', 'sudah'),
+(3, 9, 0, 'A9', 'sudah'),
+(3, 10, 0, 'A10', 'sudah'),
 (4, 1, 0, 'A1', 'sudah'),
 (4, 2, 0, 'A2', 'sudah'),
 (4, 3, 0, 'A3', 'sudah'),
@@ -167,12 +171,27 @@ INSERT INTO `seat` (`idJadwalTayang`, `noKursi`, `status`, `tempatDuduk`, `atrib
 (4, 20, 0, 'B3', 'sudah'),
 (4, 35, 0, 'C1', 'sudah'),
 (4, 36, 0, 'C2', 'sudah'),
-(4, 37, 0, 'C3', 'sudah');
+(4, 37, 0, 'C3', 'sudah'),
+(5, 8, 0, 'A8', 'sudah'),
+(5, 9, 0, 'A9', 'sudah'),
+(6, 1, 0, 'A1', 'sudah'),
+(6, 2, 0, 'A2', 'sudah'),
+(9, 92, 0, 'F7', 'sudah'),
+(9, 93, 0, 'F8', 'sudah'),
+(9, 94, 0, 'F9', 'sudah'),
+(9, 95, 0, 'F10', 'sudah'),
+(9, 96, 0, 'F11', 'sudah'),
+(20, 126, 0, 'H7', 'sudah'),
+(27, 92, 0, 'F7', 'sudah'),
+(27, 93, 0, 'F8', 'sudah'),
+(27, 94, 0, 'F9', 'sudah'),
+(27, 95, 0, 'F10', 'sudah'),
+(27, 96, 0, 'F11', 'sudah');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiketbioskop`
+-- Struktur dari tabel `tiketbioskop`
 --
 
 CREATE TABLE `tiketbioskop` (
@@ -186,17 +205,23 @@ CREATE TABLE `tiketbioskop` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tiketbioskop`
+-- Dumping data untuk tabel `tiketbioskop`
 --
 
 INSERT INTO `tiketbioskop` (`id`, `idAkun`, `idJadwalTayang`, `tempatDuduk`, `harga`, `status`, `Studio`) VALUES
 (138, 2, 3, 'A1', 30000, 'active', 'A'),
-(139, 2, 4, 'A1,A2,A3,B1,B3,C1,C2,C3', 240000, 'active', 'B');
+(139, 2, 4, 'A1,A2,A3,B1,B3,C1,C2,C3', 240000, 'active', 'B'),
+(140, 4, 3, 'A7,A8,A9,A10', 120000, 'active', 'A'),
+(141, 4, 9, 'F7,F8,F9,F10,F11', 150000, 'active', 'D'),
+(142, 4, 27, 'F7,F8,F9,F10,F11', 150000, 'active', 'A'),
+(143, 4, 20, 'H7', 30000, 'active', 'A'),
+(144, 4, 6, 'A1,A2', 60000, 'active', 'C'),
+(145, 4, 5, 'A8,A9', 60000, 'active', 'A');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiketkonserseni`
+-- Struktur dari tabel `tiketkonserseni`
 --
 
 CREATE TABLE `tiketkonserseni` (
@@ -212,17 +237,43 @@ CREATE TABLE `tiketkonserseni` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tiketkonserseni`
+-- Dumping data untuk tabel `tiketkonserseni`
 --
 
 INSERT INTO `tiketkonserseni` (`id`, `id_user`, `nama`, `NIK`, `email`, `jenis_tiket`, `jumlah_tiket`, `id_acara`, `kategori`) VALUES
 (1, 2, 'Testing aja', '12345', 'mike@gmail.com', 'Biasa', 2, 2, 'Kesenian'),
-(2, 2, 'Nabila Noor', '12091209', 'nab@gmail.com', 'raja', 4, 1, 'Konser');
+(2, 2, 'Nabila Noor', '12091209', 'nab@gmail.com', 'raja', 4, 1, 'Konser'),
+(3, 4, 'Rafli Rizani', 'F1D022088', 'zani@gmail.com', 'raja', 3, 3, 'Konser'),
+(4, 4, 'Rafli RIzani', '123', '123123', 'Istimewa', 2, 2, 'Konser'),
+(5, 4, 'Rafli RIzani', '123', '123', 'Istimewa', 1, 2, 'Kesenian'),
+(6, 4, 'Rafli Rizani', '1231232', 'zani@gmail.com', 'raja', 3, 3, 'Konser'),
+(7, 4, 'Rafli Rizani', 'F1D022088', 'zani@gmail.com', 'Istimewa', 2, 1, 'Kesenian'),
+(8, 4, 'zani', '12343', '1232', 'Biasa', 1, 1, 'Konser');
+
+--
+-- Trigger `tiketkonserseni`
+--
+DELIMITER $$
+CREATE TRIGGER `before_insert_tiketkonserseni` BEFORE INSERT ON `tiketkonserseni` FOR EACH ROW BEGIN
+    IF NEW.kategori = 'Konser' THEN
+        IF NOT EXISTS (SELECT 1 FROM `konser` WHERE `id` = NEW.id_acara) THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Invalid id_acara: No matching record in table konser for kategori Konser';
+        END IF;
+    ELSEIF NEW.kategori = 'Kesenian' THEN
+        IF NOT EXISTS (SELECT 1 FROM `kesenian` WHERE `id` = NEW.id_acara) THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Invalid id_acara: No matching record in table kesenian for kategori Kesenian';
+        END IF;
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -232,7 +283,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `password`) VALUES
@@ -247,39 +298,39 @@ INSERT INTO `user` (`id`, `username`, `password`) VALUES
 --
 
 --
--- Indexes for table `jadwaltayang`
+-- Indeks untuk tabel `jadwaltayang`
 --
 ALTER TABLE `jadwaltayang`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idMovieJadwalTayang` (`idMovie`);
 
 --
--- Indexes for table `kesenian`
+-- Indeks untuk tabel `kesenian`
 --
 ALTER TABLE `kesenian`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `konser`
+-- Indeks untuk tabel `konser`
 --
 ALTER TABLE `konser`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `movie`
+-- Indeks untuk tabel `movie`
 --
 ALTER TABLE `movie`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `seat`
+-- Indeks untuk tabel `seat`
 --
 ALTER TABLE `seat`
   ADD PRIMARY KEY (`idJadwalTayang`,`noKursi`),
   ADD UNIQUE KEY `unique_seat` (`idJadwalTayang`,`noKursi`);
 
 --
--- Indexes for table `tiketbioskop`
+-- Indeks untuk tabel `tiketbioskop`
 --
 ALTER TABLE `tiketbioskop`
   ADD PRIMARY KEY (`id`),
@@ -287,74 +338,85 @@ ALTER TABLE `tiketbioskop`
   ADD KEY `idJamTayangTiketBioskop` (`idJadwalTayang`);
 
 --
--- Indexes for table `tiketkonserseni`
+-- Indeks untuk tabel `tiketkonserseni`
 --
 ALTER TABLE `tiketkonserseni`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_tiketkonserseni_kesenian` (`id_acara`),
+  ADD KEY `idUser` (`id_user`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `jadwaltayang`
+-- AUTO_INCREMENT untuk tabel `jadwaltayang`
 --
 ALTER TABLE `jadwaltayang`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT for table `movie`
+-- AUTO_INCREMENT untuk tabel `movie`
 --
 ALTER TABLE `movie`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `tiketbioskop`
+-- AUTO_INCREMENT untuk tabel `tiketbioskop`
 --
 ALTER TABLE `tiketbioskop`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
 
 --
--- AUTO_INCREMENT for table `tiketkonserseni`
+-- AUTO_INCREMENT untuk tabel `tiketkonserseni`
 --
 ALTER TABLE `tiketkonserseni`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `jadwaltayang`
+-- Ketidakleluasaan untuk tabel `jadwaltayang`
 --
 ALTER TABLE `jadwaltayang`
   ADD CONSTRAINT `idMovieJadwalTayang` FOREIGN KEY (`idMovie`) REFERENCES `movie` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `seat`
+-- Ketidakleluasaan untuk tabel `seat`
 --
 ALTER TABLE `seat`
   ADD CONSTRAINT `fk_idJadwalTayang` FOREIGN KEY (`idJadwalTayang`) REFERENCES `jadwaltayang` (`id`);
 
 --
--- Constraints for table `tiketbioskop`
+-- Ketidakleluasaan untuk tabel `tiketbioskop`
 --
 ALTER TABLE `tiketbioskop`
   ADD CONSTRAINT `idAkunTiketBioskop` FOREIGN KEY (`idAkun`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `idJamTayangTiketBioskop` FOREIGN KEY (`idJadwalTayang`) REFERENCES `jadwaltayang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `tiketkonserseni`
+--
+ALTER TABLE `tiketkonserseni`
+  ADD CONSTRAINT `fk_tiketkonserseni_kesenian` FOREIGN KEY (`id_acara`) REFERENCES `kesenian` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tiketkonserseni_konser` FOREIGN KEY (`id_acara`) REFERENCES `konser` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `idAcaraKesenianTiketKonserSeni` FOREIGN KEY (`id_acara`) REFERENCES `kesenian` (`id`),
+  ADD CONSTRAINT `idUser` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
