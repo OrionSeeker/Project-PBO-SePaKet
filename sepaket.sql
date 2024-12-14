@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Des 2024 pada 09.36
--- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.2.12
+-- Generation Time: Dec 14, 2024 at 03:31 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jadwaltayang`
+-- Table structure for table `jadwaltayang`
 --
 
 CREATE TABLE `jadwaltayang` (
@@ -36,7 +36,7 @@ CREATE TABLE `jadwaltayang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `jadwaltayang`
+-- Dumping data for table `jadwaltayang`
 --
 
 INSERT INTO `jadwaltayang` (`id`, `idMovie`, `jamTanggal`, `hari`, `studio`) VALUES
@@ -60,7 +60,58 @@ INSERT INTO `jadwaltayang` (`id`, `idMovie`, `jamTanggal`, `hari`, `studio`) VAL
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `movie`
+-- Table structure for table `kesenian`
+--
+
+CREATE TABLE `kesenian` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `status` enum('Sedang Tayang','Coming Soon','Ended') DEFAULT NULL,
+  `lokasi` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `kesenian`
+--
+
+INSERT INTO `kesenian` (`id`, `title`, `date`, `description`, `image`, `status`, `lokasi`) VALUES
+(1, 'Gendang Beleq', '2024-12-15', 'Gendang Beleq adalah kesenian tradisional khas Lombok yang menggunakan gendang besar sebagai alat utama. Pertunjukan ini biasanya diiringi alat musik seperti gong dan suling, menciptakan suasana semangat dan meriah. Awalnya digunakan untuk upacara adat, kini Gendang Beleq menjadi simbol budaya Sasak.', 'Asset/poster/GendangBeleq.jpg', 'Sedang Tayang', 'Alun-Alun Kota Mataram'),
+(2, 'Malam Puncak Kesenian Daerah', '2024-12-20', 'Malam Puncak Kesenian Daerah menampilkan ragam budaya tradisional dan modern. Acara ini menghadirkan tarian, musik, dan seni teater dalam satu panggung megah. Sebuah perayaan untuk melestarikan dan membanggakan kekayaan seni lokal.', 'Asset/poster/MalamPuncak.jpg', 'Sedang Tayang', 'Lapangan Mendirat'),
+(3, 'Kesenian Daerah Banjarnegara', '2025-01-01', 'Banjarnegara dikenal dengan Lengger Calung, tarian khas yang diiringi musik bambu. Kesenian ini sering diselingi guyonan untuk menghibur penonton. Tradisi lain seperti Ebeg (kuda lumping) dan batik Gumelem juga memperkaya budaya daerah ini.', 'Asset/poster/Banjarnegara.jpg', 'Coming Soon', 'Alun-Alun Banjarnegara');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `konser`
+--
+
+CREATE TABLE `konser` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `status` enum('Sedang Tayang','Coming Soon','ended') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `konser`
+--
+
+INSERT INTO `konser` (`id`, `title`, `date`, `description`, `image`, `status`) VALUES
+(1, 'Konser Ari Lasso: Kehidupan Ketiga', '2024-10-12', 'Konser ini adalah perayaan perjalanan hidup dan karier Ari Lasso yang luar biasa, terutama setelah melewati perjuangan melawan penyakit serius. Kehidupan Ketiga menjadi simbol babak baru dalam kehidupannya, menampilkan lagu-lagu hits seperti Hampa, Cinta Terakhir, dan Mengejar Matahari. Konser ini tidak hanya membawa nostalgia, tetapi juga menggambarkan semangat hidup dan rasa syukur Ari kepada para penggemarnya.', 'Asset/poster/AriLasso.jpeg', 'Sedang Tayang'),
+(2, 'IU: Hereh Concert', '2024-12-13', 'Konser Hereh dari IU menonjolkan sisi artistiknya yang penuh warna. IU dikenal karena menggabungkan genre pop, balada, dan jazz dengan vokalnya yang emosional. Konser ini memperlihatkan produksi panggung yang megah dan dekat dengan fans, menampilkan lagu-lagu hits seperti Good Day, Blueming, dan Eight. Pesan cinta dan harapan menjadi tema besar yang menghubungkan IU dengan UAENA (sebutan untuk fans IU).', 'Asset/poster/IU.jpg', 'Sedang Tayang'),
+(3, 'Ed Sheeran Concert', '2024-12-15', 'Konser Ed Sheeran selalu menghadirkan performa yang memukau dengan suasana yang intim meski di stadion besar. Dikenal dengan gaya one-man band, Ed memainkan gitar dan loop station untuk membangun setiap lagu secara live. Lagu-lagu populer seperti Perfect, Shape of You, dan Thinking Out Loud biasanya menjadi bagian dari setlist-nya. Konsernya mengutamakan cerita personal yang menghubungkan penggemar dengan kisah di balik lagunya.', 'Asset/poster/EdSheeran.jpg', 'Sedang Tayang'),
+(4, 'MLTR: Journey to Your Heart', '2025-01-01', 'MLTR (Michael Learns to Rock) menghadirkan konser penuh nostalgia dengan lagu-lagu legendaris mereka seperti Paint My Love, 25 Minutes, dan Sleeping Child. Dengan suara khas soft rock dan balada romantis, konser ini menawarkan suasana santai namun penuh kenangan bagi generasi yang tumbuh bersama musik mereka.', 'Asset/poster/MLTR.jpg', 'Coming Soon'),
+(5, 'Yoasobi Concert', '2025-02-12', 'Konser Yoasobi membawa pengalaman penuh energi dari duo Jepang yang terkenal dengan gaya musik pop elektronik yang dinamis. Lagu-lagu seperti Yoru ni Kakeru, Gunjou, dan Idol menghadirkan pengalaman visual spektakuler dengan pencahayaan futuristik yang menyatu dengan alur musiknya. Selain itu, Yoasobi sering menghadirkan storytelling yang terinspirasi dari literatur Jepang, memberikan makna mendalam di setiap lagu mereka.', 'Asset/poster/Yoasobi.jpg', 'Coming Soon');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `movie`
 --
 
 CREATE TABLE `movie` (
@@ -76,7 +127,7 @@ CREATE TABLE `movie` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `movie`
+-- Dumping data for table `movie`
 --
 
 INSERT INTO `movie` (`id`, `title`, `direction`, `year`, `genre`, `description`, `image`, `urlMovie`, `status`) VALUES
@@ -92,7 +143,7 @@ INSERT INTO `movie` (`id`, `title`, `direction`, `year`, `genre`, `description`,
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `seat`
+-- Table structure for table `seat`
 --
 
 CREATE TABLE `seat` (
@@ -103,10 +154,25 @@ CREATE TABLE `seat` (
   `atributBantu` enum('sudah','belum') NOT NULL DEFAULT 'belum'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `seat`
+--
+
+INSERT INTO `seat` (`idJadwalTayang`, `noKursi`, `status`, `tempatDuduk`, `atributBantu`) VALUES
+(3, 1, 0, 'A1', 'sudah'),
+(4, 1, 0, 'A1', 'sudah'),
+(4, 2, 0, 'A2', 'sudah'),
+(4, 3, 0, 'A3', 'sudah'),
+(4, 18, 0, 'B1', 'sudah'),
+(4, 20, 0, 'B3', 'sudah'),
+(4, 35, 0, 'C1', 'sudah'),
+(4, 36, 0, 'C2', 'sudah'),
+(4, 37, 0, 'C3', 'sudah');
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tiketbioskop`
+-- Table structure for table `tiketbioskop`
 --
 
 CREATE TABLE `tiketbioskop` (
@@ -119,10 +185,44 @@ CREATE TABLE `tiketbioskop` (
   `Studio` varchar(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tiketbioskop`
+--
+
+INSERT INTO `tiketbioskop` (`id`, `idAkun`, `idJadwalTayang`, `tempatDuduk`, `harga`, `status`, `Studio`) VALUES
+(138, 2, 3, 'A1', 30000, 'active', 'A'),
+(139, 2, 4, 'A1,A2,A3,B1,B3,C1,C2,C3', 240000, 'active', 'B');
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Table structure for table `tiketkonserseni`
+--
+
+CREATE TABLE `tiketkonserseni` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) DEFAULT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `NIK` varchar(15) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `jenis_tiket` varchar(255) DEFAULT NULL,
+  `jumlah_tiket` int(11) DEFAULT NULL,
+  `id_acara` int(11) DEFAULT NULL,
+  `kategori` enum('Konser','Kesenian') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tiketkonserseni`
+--
+
+INSERT INTO `tiketkonserseni` (`id`, `id_user`, `nama`, `NIK`, `email`, `jenis_tiket`, `jumlah_tiket`, `id_acara`, `kategori`) VALUES
+(1, 2, 'Testing aja', '12345', 'mike@gmail.com', 'Biasa', 2, 2, 'Kesenian'),
+(2, 2, 'Nabila Noor', '12091209', 'nab@gmail.com', 'raja', 4, 1, 'Konser');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -132,7 +232,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `password`) VALUES
@@ -147,27 +247,39 @@ INSERT INTO `user` (`id`, `username`, `password`) VALUES
 --
 
 --
--- Indeks untuk tabel `jadwaltayang`
+-- Indexes for table `jadwaltayang`
 --
 ALTER TABLE `jadwaltayang`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idMovieJadwalTayang` (`idMovie`);
 
 --
--- Indeks untuk tabel `movie`
+-- Indexes for table `kesenian`
+--
+ALTER TABLE `kesenian`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `konser`
+--
+ALTER TABLE `konser`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `movie`
 --
 ALTER TABLE `movie`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `seat`
+-- Indexes for table `seat`
 --
 ALTER TABLE `seat`
   ADD PRIMARY KEY (`idJadwalTayang`,`noKursi`),
   ADD UNIQUE KEY `unique_seat` (`idJadwalTayang`,`noKursi`);
 
 --
--- Indeks untuk tabel `tiketbioskop`
+-- Indexes for table `tiketbioskop`
 --
 ALTER TABLE `tiketbioskop`
   ADD PRIMARY KEY (`id`),
@@ -175,58 +287,70 @@ ALTER TABLE `tiketbioskop`
   ADD KEY `idJamTayangTiketBioskop` (`idJadwalTayang`);
 
 --
--- Indeks untuk tabel `user`
+-- Indexes for table `tiketkonserseni`
+--
+ALTER TABLE `tiketkonserseni`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `jadwaltayang`
+-- AUTO_INCREMENT for table `jadwaltayang`
 --
 ALTER TABLE `jadwaltayang`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT untuk tabel `movie`
+-- AUTO_INCREMENT for table `movie`
 --
 ALTER TABLE `movie`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT untuk tabel `tiketbioskop`
+-- AUTO_INCREMENT for table `tiketbioskop`
 --
 ALTER TABLE `tiketbioskop`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
 
 --
--- AUTO_INCREMENT untuk tabel `user`
+-- AUTO_INCREMENT for table `tiketkonserseni`
+--
+ALTER TABLE `tiketkonserseni`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `jadwaltayang`
+-- Constraints for table `jadwaltayang`
 --
 ALTER TABLE `jadwaltayang`
   ADD CONSTRAINT `idMovieJadwalTayang` FOREIGN KEY (`idMovie`) REFERENCES `movie` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `seat`
+-- Constraints for table `seat`
 --
 ALTER TABLE `seat`
   ADD CONSTRAINT `fk_idJadwalTayang` FOREIGN KEY (`idJadwalTayang`) REFERENCES `jadwaltayang` (`id`);
 
 --
--- Ketidakleluasaan untuk tabel `tiketbioskop`
+-- Constraints for table `tiketbioskop`
 --
 ALTER TABLE `tiketbioskop`
   ADD CONSTRAINT `idAkunTiketBioskop` FOREIGN KEY (`idAkun`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
