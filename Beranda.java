@@ -5,6 +5,8 @@ import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Beranda extends JFrame {
     private int userId; 
@@ -12,14 +14,13 @@ public class Beranda extends JFrame {
     private JLabel headerImageLabel;
 
     public Beranda(int userId) {
-        this.userId = userId;  // Assign userId from LoginRegister
+        this.userId = userId;  
         setTitle("SiPaket");
         setSize(1440, 1080);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        setLocationRelativeTo(null);
 
-        // // Create header panel with image background
+        // Create header panel with image background
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setPreferredSize(new Dimension(1440, 200));
@@ -68,14 +69,14 @@ public class Beranda extends JFrame {
         Font customFont = loadFont("asset/Poppins-Bold.ttf", 32);
 
         // Category panel
-        JPanel kategoriPanel = createPanel("KATEGORI", new String[]{"Film", "Kesenian", "Konser"});
+        JPanel kategoriPanel = createPanel("Kategori", new String[]{"Film", "Kesenian", "Konser"});
         kategoriPanel.setFont(customFont);
         kategoriPanel.setPreferredSize(new Dimension(1440, 600));
         kategoriPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0)); 
         mainPanel.add(kategoriPanel);
 
-        // Bought ticket panel
-        JPanel tiketDibeliPanel = createPanel("TIKET DIBELI", new String[]{"Film A", "Film B", "Film C"});
+        // Bought ticket panel (Initially empty)
+        JPanel tiketDibeliPanel = createPanel("TIKET DIBELI", new String[]{});
         tiketDibeliPanel.setFont(customFont);
         tiketDibeliPanel.setPreferredSize(new Dimension(1440, 600));
         tiketDibeliPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0)); 
@@ -126,10 +127,10 @@ public class Beranda extends JFrame {
                         new Bioskop(); 
                         break;
                     case "Kesenian":
-                        new DaftarKesenian(); 
+                        new detailKategori(userId); 
                         break;
                     case "Konser":
-                        new DaftarKonser();
+                        new detailKategori(userId);
                         break;
                     default:
                         break;
@@ -141,9 +142,9 @@ public class Beranda extends JFrame {
         panel.add(buttonPanel, BorderLayout.CENTER);
         panel.setPreferredSize(new Dimension(1440, 440));
         return panel;
-    }    
+    }
 
-    // Method to load user-specific data (for example, user profile data)
+    // Load user data from the database
     private void loadUserData() {
         try (Connection conn = ConnectKeDB.getConnection()) {
             String query = "SELECT * FROM user WHERE id = ?";
@@ -153,13 +154,66 @@ public class Beranda extends JFrame {
                 try (ResultSet rs = st.executeQuery()) {
                     if (rs.next()) {
                         String username = rs.getString("username");
-                        System.out.println("Welcome, " + username); 
+                        System.out.println("Welcome, " + username);
+
+                        // Fetch tickets bought by the user
+                        String tiketQuery = "SELECT nama_tiket FROM tiketbioskop WHERE user_id = ? UNION SELECT nama_tiket FROM tiketkonserseni WHERE user_id = ?";
+                        try (PreparedStatement tiketSt = conn.prepareStatement(tiketQuery)) {
+                            tiketSt.setInt(1, userId);
+                            tiketSt.setInt(2, userId);
+                            
+                            try (ResultSet tiketRs = tiketSt.executeQuery()) {
+                                List<String> tiketList = new ArrayList<>();
+                                while (tiketRs.next()) {
+                                    String tiket = tiketRs.getString("nama_tiket");
+                                    tiketList.add(tiket);
+                                }
+
+                                // Call method to update panel with tickets
+                                updateTiketDibeliPanel(tiketList);
+                            }
+                        }
                     }
                 }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void updateTiketDibeliPanel(List<String> tiketList) {
+        // Create the updated ticket panel with dynamic ticket names
+        int maxTiketToShow = 3;
+        List<String> ticketsToShow = tiketList.size() > maxTiketToShow 
+                ? tiketList.subList(0, maxTiketToShow) 
+                : tiketList;
+
+        // Create the panel and update it
+        JPanel tiketDibeliPanel = createPanel("TIKET DIBELI", ticketsToShow.toArray(new String[0]));
+        tiketDibeliPanel.setPreferredSize(new Dimension(1440, 600));
+        
+        // If there are more than 3 tickets, add "See More" button
+        if (tiketList.size() > maxTiketToShow) {
+            JButton seeMoreButton = new JButton("Lihat Selengkapnya");
+            seeMoreButton.setFont(new Font("Arial", Font.BOLD, 18));
+            seeMoreButton.setBackground(new Color(0x2F2F80));
+            seeMoreButton.setForeground(Color.WHITE);
+            seeMoreButton.setFocusPainted(false);
+            seeMoreButton.setPreferredSize(new Dimension(300, 50));
+            seeMoreButton.addActionListener(e -> new SemuaTiket(userId)); // Show the full ticket list
+
+            // Add the "See More" button
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setBackground(Color.WHITE);
+            buttonPanel.add(seeMoreButton);
+            tiketDibeliPanel.add(buttonPanel, BorderLayout.SOUTH);
+        }
+
+        // Update the main frame with the new tiket panel
+        remove(tiketDibeliPanel);
+        add(tiketDibeliPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 
     // Resize header image
@@ -210,9 +264,5 @@ public class Beranda extends JFrame {
             Shape shape = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), 20, 20);
             return shape.contains(x, y);
         }
-    }
-
-    public static void main(String[] args) {
-        new Beranda(1);
     }
 }
