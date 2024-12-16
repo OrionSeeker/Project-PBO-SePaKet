@@ -1,23 +1,29 @@
-public  class tiket {
-    private int idTiket;
-    private String namaTiket;
+import javax.swing.JPanel;
+
+public abstract class tiket {
+    private int iduser;
+    private String title;
     private String jadwal;
+    private String image;
 
-    public tiket(int idTiket, String namaTiket, String jadwal) {
-        this.idTiket = idTiket;
-        this.namaTiket = namaTiket;
+    public tiket(int iduser,String title, String jadwal, String image) {
+        this.title = title;
         this.jadwal = jadwal;
+        this.image = image;
     }
-
-    public int getIdTiket() {
-        return idTiket;
+    public int getIduser() {
+        return iduser;
     }
-    public String getNamaTiket() {
-        return namaTiket;
+    public String getTitle() {
+        return title;
     }
     public String getJadwal() {
         return jadwal;
     }
+    public String getImage() {
+        return image;
+    }
 
+    public abstract JPanel tiketPanel(int idAkun, String kategori, int id);
 
 }

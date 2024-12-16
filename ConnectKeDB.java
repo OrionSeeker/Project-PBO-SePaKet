@@ -288,7 +288,7 @@ public class ConnectKeDB {
                 String title = rs.getString("title");
                 String image = rs.getString("image");
                 String username = rs.getString("username");
-                tiket.add(new tiketBioskop(tempatDuduk, jadwal, hari, studio, title, image,username));
+                tiket.add(new tiketBioskop(tempatDuduk, jadwal, hari, studio, title, image,username, idAkun));
             }
 
         } catch (SQLException e) {
@@ -314,7 +314,7 @@ public class ConnectKeDB {
                 String jadwal = rs.getString("jadwal");
                 String image = rs.getString("image");
                 String title = rs.getString("title");
-                tiket.add(new tiketKonserSeni(namaLengkap, nik, email, jenisTiket, jumlahTiket, jadwal, image, title));
+                tiket.add(new tiketKonserSeni(namaLengkap, nik, email, jenisTiket, jumlahTiket, jadwal, image, title, idAkun));
             }
 
         } catch (SQLException e) {

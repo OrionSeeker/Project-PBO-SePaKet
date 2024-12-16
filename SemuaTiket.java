@@ -53,9 +53,6 @@ public class SemuaTiket {
         mainContentPanel.add(bioskopLabelPanel);
         // Menambahkan panel Movies ke mainContentPanel dengan data yang sudah
         ArrayList<tiketBioskop> tiketBioskopS = ConnectKeDB.getAllTiketBioskop(idAkun);
-        for (int i = 0; i <= tiketBioskopS.size(); i += 3) {
-            mainContentPanel.add(tiketBioskopPanel(tiketBioskopS, i));
-        }
         if (tiketBioskopS.size() == 0) {
             JPanel emptyPanel = new JPanel();
             emptyPanel.setLayout(new BorderLayout());
@@ -67,6 +64,10 @@ public class SemuaTiket {
             emptyLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             emptyPanel.add(emptyLabel, BorderLayout.CENTER);
             mainContentPanel.add(emptyPanel);
+        } else {
+            for (int i = 0; i <= tiketBioskopS.size(); i += 3) {
+                mainContentPanel.add(tiketBioskopPanel(tiketBioskopS, i));
+            }
         }
         // Menambahkan panel series ke mainContentPanel dengan data yang sudah
         // diinputkan
@@ -79,9 +80,6 @@ public class SemuaTiket {
 
         mainContentPanel.add(kesenianLabelPanel);
         ArrayList<tiketKonserSeni> tiketKesenianS = ConnectKeDB.getAllTiketKonserSeni(idAkun, "Kesenian");
-        for (int i = 0; i <= tiketKesenianS.size(); i += 3) {
-            mainContentPanel.add(tiketKonserSeniPanel(tiketKesenianS, i, "Kesenian"));
-        }
         if (tiketKesenianS.size() == 0) {
             JPanel emptyPanel = new JPanel();
             emptyPanel.setLayout(new BorderLayout());
@@ -93,6 +91,10 @@ public class SemuaTiket {
             emptyLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             emptyPanel.add(emptyLabel, BorderLayout.CENTER);
             mainContentPanel.add(emptyPanel);
+        } else {
+            for (int i = 0; i <= tiketKesenianS.size(); i += 3) {
+                mainContentPanel.add(tiketKonserSeniPanel(tiketKesenianS, i, "Kesenian"));
+            }
         }
         JLabel konserLabel = new JLabel("Tiket Konser");
         konserLabel.setFont(new Font("Arial", Font.BOLD, 24));
@@ -103,9 +105,6 @@ public class SemuaTiket {
 
         mainContentPanel.add(konserLabelPanel);
         ArrayList<tiketKonserSeni> tiketkonserS = ConnectKeDB.getAllTiketKonserSeni(idAkun, "Konser");
-        for (int i = 0; i <= tiketkonserS.size(); i += 3) {
-            mainContentPanel.add(tiketKonserSeniPanel(tiketkonserS, i, "Konser"));
-        }
         if (tiketkonserS.size() == 0) {
             JPanel emptyPanel = new JPanel();
             emptyPanel.setLayout(new BorderLayout());
@@ -117,7 +116,12 @@ public class SemuaTiket {
             emptyLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             emptyPanel.add(emptyLabel, BorderLayout.CENTER);
             mainContentPanel.add(emptyPanel);
+        } else {
+            for (int i = 0; i <= tiketkonserS.size(); i += 3) {
+                mainContentPanel.add(tiketKonserSeniPanel(tiketkonserS, i, "Konser"));
+            }
         }
+        mainContentPanel.add(Box.createVerticalStrut(20));
         JScrollPane scrollPane = new JScrollPane(mainContentPanel);
         // Mengatur tipe scrollbar untuk hanya muncul jika diperlukan
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -164,28 +168,28 @@ public class SemuaTiket {
             Font labelFont = new Font("Arial", Font.PLAIN, 14);
             Color textColor = new Color(60, 60, 60);
 
-            JLabel namaLabel = new JLabel("Nama Pemesan: " + tiketS.get(i+index).getUsername());
+            JLabel namaLabel = new JLabel("Nama Pemesan: " + tiketS.get(i + index).getUsername());
             namaLabel.setFont(labelFont);
             namaLabel.setForeground(textColor);
             namaLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
             namaLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             detailPanel.add(namaLabel);
 
-            JLabel tempatDudukLabel = new JLabel("Tempat Duduk: " + tiketS.get(i+index).getTempatDuduk());
+            JLabel tempatDudukLabel = new JLabel("Tempat Duduk: " + tiketS.get(i + index).getTempatDuduk());
             tempatDudukLabel.setFont(labelFont);
             tempatDudukLabel.setForeground(textColor);
             tempatDudukLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
             tempatDudukLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             detailPanel.add(tempatDudukLabel);
 
-            JLabel studioLabel = new JLabel("Studio: " + tiketS.get(i+index).getStudio());
+            JLabel studioLabel = new JLabel("Studio: " + tiketS.get(i + index).getStudio());
             studioLabel.setFont(labelFont);
             studioLabel.setForeground(textColor);
             studioLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
             studioLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             detailPanel.add(studioLabel);
 
-            JLabel hariLabel = new JLabel("Hari: " + tiketS.get(i+index).getHari());
+            JLabel hariLabel = new JLabel("Hari: " + tiketS.get(i + index).getHari());
             hariLabel.setFont(labelFont);
             hariLabel.setForeground(textColor);
             hariLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
@@ -204,13 +208,14 @@ public class SemuaTiket {
             posterInfoPanel.setBackground(Color.WHITE);
 
             ImageIcon posterIcon = new ImageIcon(
-                    new ImageIcon(tiketS.get(i+index).getImage()).getImage().getScaledInstance(140, 180, Image.SCALE_SMOOTH));
+                    new ImageIcon(tiketS.get(i + index).getImage()).getImage().getScaledInstance(140, 180,
+                            Image.SCALE_SMOOTH));
             JLabel posterLabel = new JLabel();
             posterLabel.setIcon(posterIcon);
             posterLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             posterInfoPanel.add(posterLabel);
 
-            JLabel movieTitleLabel = new JLabel(tiketS.get(i+index).getTitle(), JLabel.CENTER);
+            JLabel movieTitleLabel = new JLabel(tiketS.get(i + index).getTitle(), JLabel.CENTER);
             movieTitleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
             movieTitleLabel.setForeground(new Color(70, 70, 70));
             movieTitleLabel.setBackground(Color.WHITE);
@@ -218,7 +223,7 @@ public class SemuaTiket {
             movieTitleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             posterInfoPanel.add(movieTitleLabel);
 
-            JLabel movieDateLabel = new JLabel(tiketS.get(i+index).getJadwal(), JLabel.CENTER);
+            JLabel movieDateLabel = new JLabel(tiketS.get(i + index).getJadwal(), JLabel.CENTER);
             movieDateLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
             movieDateLabel.setForeground(new Color(120, 120, 120));
             movieDateLabel.setBackground(Color.WHITE);
@@ -304,35 +309,35 @@ public class SemuaTiket {
             Font labelFont = new Font("Arial", Font.PLAIN, 14);
             Color textColor = new Color(60, 60, 60);
 
-            JLabel namaLabel = new JLabel("Nama Pemesan: " + tiketS.get(i+index).namaLengkap);
+            JLabel namaLabel = new JLabel("Nama Pemesan: " + tiketS.get(i + index).namaLengkap);
             namaLabel.setFont(labelFont);
             namaLabel.setForeground(textColor);
             namaLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
             namaLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             detailPanel.add(namaLabel);
 
-            JLabel emailLabel = new JLabel("Email: " + tiketS.get(i+index).email);
+            JLabel emailLabel = new JLabel("Email: " + tiketS.get(i + index).email);
             emailLabel.setFont(labelFont);
             emailLabel.setForeground(textColor);
             emailLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
             emailLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             detailPanel.add(emailLabel);
 
-            JLabel nikLabel = new JLabel("NIK: " + tiketS.get(i+index).nik);
+            JLabel nikLabel = new JLabel("NIK: " + tiketS.get(i + index).nik);
             nikLabel.setFont(labelFont);
             nikLabel.setForeground(textColor);
             nikLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
             nikLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             detailPanel.add(nikLabel);
 
-            JLabel jenisTiketLabel = new JLabel("Jenis Tiket: " + tiketS.get(i+index).jenisTiket);
+            JLabel jenisTiketLabel = new JLabel("Jenis Tiket: " + tiketS.get(i + index).jenisTiket);
             jenisTiketLabel.setFont(labelFont);
             jenisTiketLabel.setForeground(textColor);
             jenisTiketLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
             jenisTiketLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             detailPanel.add(jenisTiketLabel);
 
-            JLabel jumlahTiketLabel = new JLabel("Jumlah Tiket: " + tiketS.get(i+index).jumlahTiket);
+            JLabel jumlahTiketLabel = new JLabel("Jumlah Tiket: " + tiketS.get(i + index).jumlahTiket);
             jumlahTiketLabel.setFont(labelFont);
             jumlahTiketLabel.setForeground(textColor);
             jumlahTiketLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
@@ -351,13 +356,14 @@ public class SemuaTiket {
             posterInfoPanel.setBackground(Color.WHITE);
 
             ImageIcon posterIcon = new ImageIcon(
-                    new ImageIcon(tiketS.get(i+index).image).getImage().getScaledInstance(140, 180, Image.SCALE_SMOOTH));
+                    new ImageIcon(tiketS.get(i + index).getImage()).getImage().getScaledInstance(140, 180,
+                            Image.SCALE_SMOOTH));
             JLabel posterLabel = new JLabel();
             posterLabel.setIcon(posterIcon);
             posterLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             posterInfoPanel.add(posterLabel);
 
-            JLabel movieTitleLabel = new JLabel(tiketS.get(i+index).title, JLabel.CENTER);
+            JLabel movieTitleLabel = new JLabel(tiketS.get(i + index).getTitle(), JLabel.CENTER);
             movieTitleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
             movieTitleLabel.setForeground(new Color(70, 70, 70));
             movieTitleLabel.setBackground(Color.WHITE);
@@ -365,7 +371,7 @@ public class SemuaTiket {
             movieTitleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
             posterInfoPanel.add(movieTitleLabel);
 
-            JLabel movieDateLabel = new JLabel(tiketS.get(i+index).jadwal, JLabel.CENTER);
+            JLabel movieDateLabel = new JLabel(tiketS.get(i + index).getJadwal(), JLabel.CENTER);
             movieDateLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
             movieDateLabel.setForeground(new Color(120, 120, 120));
             movieDateLabel.setBackground(Color.WHITE);
@@ -416,6 +422,6 @@ public class SemuaTiket {
     }
 
     public static void main(String[] args) {
-        new SemuaTiket(4);
+        new SemuaTiket(5);
     }
 }
