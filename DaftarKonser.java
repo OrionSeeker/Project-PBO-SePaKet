@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class DaftarKonser {
+public class DaftarKonser implements app {
     private JFrame frame;
     private JPanel mainPanel;
 
@@ -16,11 +16,7 @@ public class DaftarKonser {
 
         mainPanel = new JPanel(new BorderLayout());
 
-        ActionListener backButtonListener = e -> {
-            frame.dispose();
-        };
-        
-        mainPanel.add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
+        mainPanel.add(createHeaderPanel(), BorderLayout.NORTH);
 
         mainPanel.add(createMainContentPanel(), BorderLayout.CENTER);
 
@@ -28,8 +24,12 @@ public class DaftarKonser {
 
         frame.setVisible(true);
     }
-
-    private JScrollPane createMainContentPanel() {
+    @Override
+    public JPanel createHeaderPanel(){
+        return Head.createHeaderPanel(e -> frame.dispose());
+    }
+    @Override
+    public JScrollPane createMainContentPanel() {
         JPanel mainContentPanel = new JPanel();
         mainContentPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 20));
         mainContentPanel.setLayout(new BoxLayout(mainContentPanel, BoxLayout.Y_AXIS));

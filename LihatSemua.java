@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class LihatSemua {
+public class LihatSemua implements app {
     private JFrame frame;
     private JPanel mainPanel;
     String status;
@@ -17,11 +17,7 @@ public class LihatSemua {
 
         mainPanel = new JPanel(new BorderLayout());
 
-        ActionListener backButtonListener = e -> {
-            frame.dispose();
-        };
-
-        mainPanel.add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
+        mainPanel.add(createHeaderPanel(), BorderLayout.NORTH);
 
         mainPanel.add(createMainContentPanel(), BorderLayout.CENTER);
 
@@ -29,8 +25,12 @@ public class LihatSemua {
 
         frame.setVisible(true);
     }
-
-    private JPanel createMainContentPanel() {
+    @Override
+    public JPanel createHeaderPanel(){
+        return Head.createHeaderPanel(e -> frame.dispose());
+    }
+    @Override
+    public JScrollPane createMainContentPanel() {
         // Membuat panel utama untuk konten
         JPanel mainContentPanel = new JPanel();
         // Mengatur border dari mainContentPanel dengan padding 20px di atas
@@ -43,7 +43,12 @@ public class LihatSemua {
         ArrayList<Movie> movieList = ConnectKeDB.getAllMovie(status);
         mainContentPanel.add(createCategoryPanel(status, movieList));
         // Mengembalikan mainContentPanel
-        return mainContentPanel;
+        JScrollPane scrollPane = new JScrollPane(mainContentPanel);
+        // Mengatur tipe scrollbar untuk hanya muncul jika diperlukan
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // jika tidak ingin scroll
+
+        return scrollPane;
     }
 
     private static JPanel createCategoryPanel(String categoryTitle, ArrayList<Movie> movieList) {
@@ -99,7 +104,7 @@ public class LihatSemua {
         // Mengatur horizontal scroll bar policy dari scrollPane menjadi NEVER
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         // Mengatur vertical scroll bar policy dari scrollPane menjadi ALWAYS
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         // Mengatur border dari scrollPane menjadi null
         scrollPane.setBorder(null);
         // Mengatur warna background dari viewport dari scrollPane menjadi BLACK

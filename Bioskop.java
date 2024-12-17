@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class Bioskop {
+public class Bioskop implements app {
     private JFrame frame;
     private JPanel mainPanel;
 
@@ -15,12 +15,8 @@ public class Bioskop {
         frame.setLocationRelativeTo(null);
 
         mainPanel = new JPanel(new BorderLayout());
-
-        ActionListener backButtonListener = e -> {
-            frame.dispose();
-        };
         
-        mainPanel.add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
+        mainPanel.add(createHeaderPanel(), BorderLayout.NORTH);
 
         mainPanel.add(createMainContentPanel(), BorderLayout.CENTER);
 
@@ -29,8 +25,12 @@ public class Bioskop {
         frame.setVisible(true);
     }
 
-
-    private JScrollPane createMainContentPanel() {
+    @Override
+    public JPanel createHeaderPanel(){
+        return Head.createHeaderPanel(e -> frame.dispose());
+    }
+    @Override
+    public JScrollPane createMainContentPanel() {
         // Membuat panel utama untuk konten
         JPanel mainContentPanel = new JPanel();
         // Mengatur border dari mainContentPanel dengan padding 20px di atas

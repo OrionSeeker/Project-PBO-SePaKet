@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class LihatSemuaKonser {
+public class LihatSemuaKonser implements app {
     private JFrame frame;
     private JPanel mainPanel;
     String status;
@@ -17,11 +17,7 @@ public class LihatSemuaKonser {
 
         mainPanel = new JPanel(new BorderLayout());
 
-        ActionListener backButtonListener = e -> {
-            frame.dispose();
-        };
-
-        mainPanel.add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
+        mainPanel.add(createHeaderPanel(), BorderLayout.NORTH);
 
         mainPanel.add(createMainContentPanel(), BorderLayout.CENTER);
 
@@ -29,8 +25,12 @@ public class LihatSemuaKonser {
 
         frame.setVisible(true);
     }
-
-    private JPanel createMainContentPanel() {
+    @Override
+    public JPanel createHeaderPanel(){
+        return Head.createHeaderPanel(e -> frame.dispose());
+    }
+    @Override
+    public JScrollPane createMainContentPanel() {
         // Membuat panel utama untuk konten
         JPanel mainContentPanel = new JPanel();
         // Mengatur border dari mainContentPanel dengan padding 20px di atas
@@ -43,7 +43,12 @@ public class LihatSemuaKonser {
         ArrayList<Konser> konserList = ConnectKeDB.getKonser(status);
         mainContentPanel.add(createCategoryPanel(status, konserList));
         // Mengembalikan mainContentPanel
-        return mainContentPanel;
+        JScrollPane scrollPane = new JScrollPane(mainContentPanel);
+        // Mengatur tipe scrollbar untuk hanya muncul jika diperlukan
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // jika tidak ingin scroll
+
+        return scrollPane;
     }
 
     private static JPanel createCategoryPanel(String categoryTitle, ArrayList<Konser> konserList) {
@@ -74,8 +79,8 @@ public class LihatSemuaKonser {
                 if (e.getClickCount() == 1) {
                     int index = filmList.locationToIndex(e.getPoint());
                     if (index != -1) {
-                        Movie selectedFilm = filmList.getModel().getElementAt(index);
-                        new DetailMovie(selectedFilm);
+                        Konser selectedFilm = filmList.getModel().getElementAt(index);
+                        new DetailKonser(selectedFilm);
                     }
                 }
             }
@@ -83,7 +88,7 @@ public class LihatSemuaKonser {
 
         JScrollPane scrollPane = new JScrollPane(filmList);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBorder(null);
         scrollPane.getViewport().setBackground(Color.BLACK);
 

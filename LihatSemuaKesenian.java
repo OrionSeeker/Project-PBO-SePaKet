@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class LihatSemuaKesenian {
+public class LihatSemuaKesenian implements app{
     private JFrame frame;
     private JPanel mainPanel;
     String status;
@@ -17,11 +17,7 @@ public class LihatSemuaKesenian {
 
         mainPanel = new JPanel(new BorderLayout());
 
-        ActionListener backButtonListener = e -> {
-            frame.dispose();
-        };
-
-        mainPanel.add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
+        mainPanel.add(createHeaderPanel(), BorderLayout.NORTH);
 
         mainPanel.add(createMainContentPanel(), BorderLayout.CENTER);
 
@@ -29,15 +25,24 @@ public class LihatSemuaKesenian {
 
         frame.setVisible(true);
     }
-
-    private JPanel createMainContentPanel() {
-        JPanel mainContentPanel = new JPanel();
+    @Override
+    public JPanel createHeaderPanel(){
+        return Head.createHeaderPanel(e -> frame.dispose());
+    }
+    @Override
+    public JScrollPane createMainContentPanel() {
+            JPanel mainContentPanel = new JPanel();
         mainContentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 0, 20));
         mainContentPanel.setLayout(new BoxLayout(mainContentPanel, BoxLayout.Y_AXIS));
         mainContentPanel.setBackground(Color.WHITE);
         ArrayList<Kesenian> kesenianList = ConnectKeDB.getKesenian(status);
         mainContentPanel.add(createCategoryPanel(status, kesenianList));
-        return mainContentPanel;
+        JScrollPane scrollPane = new JScrollPane(mainContentPanel);
+        // Mengatur tipe scrollbar untuk hanya muncul jika diperlukan
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // jika tidak ingin scroll
+
+        return scrollPane;
     }
 
     private static JPanel createCategoryPanel(String categoryTitle, ArrayList<Kesenian> kesenianList) {
@@ -68,8 +73,8 @@ public class LihatSemuaKesenian {
                 if (e.getClickCount() == 1) {
                     int index = filmList.locationToIndex(e.getPoint());
                     if (index != -1) {
-                        Movie selectedFilm = filmList.getModel().getElementAt(index);
-                        new DetailMovie(selectedFilm);
+                        Kesenian selectedFilm = filmList.getModel().getElementAt(index);
+                        new DetailKesenian(selectedFilm);
                     }
                 }
             }
@@ -77,7 +82,7 @@ public class LihatSemuaKesenian {
 
         JScrollPane scrollPane = new JScrollPane(filmList);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBorder(null);
         scrollPane.getViewport().setBackground(Color.BLACK);
 
@@ -133,5 +138,6 @@ public class LihatSemuaKesenian {
     }
 
     public static void main(String[] args) {
+        new LihatSemuaKesenian("Sedang Tayang");
     }
 }

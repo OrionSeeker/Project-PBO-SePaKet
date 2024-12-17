@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class DetailKonser {
+public class DetailKonser implements app {
     private JFrame frame;
     private JPanel mainPanel;
     Konser konser;
@@ -20,11 +20,7 @@ public class DetailKonser {
 
         mainPanel = new JPanel(new BorderLayout());
 
-        ActionListener backButtonListener = e -> {
-            frame.dispose();
-        };
-
-        mainPanel.add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
+        mainPanel.add(createHeaderPanel(), BorderLayout.NORTH);
 
         mainPanel.add(createMainContentPanel(), BorderLayout.CENTER);
 
@@ -33,7 +29,13 @@ public class DetailKonser {
         frame.setVisible(true);
     }
 
-    private JScrollPane createMainContentPanel() {
+    @Override
+    public JPanel createHeaderPanel() {
+        return Head.createHeaderPanel(e -> frame.dispose());
+    }
+
+    @Override
+    public JScrollPane createMainContentPanel() {
         // Membuat panel utama untuk konten
         JPanel mainContentPanel = new JPanel();
         // Mengatur border dari mainContentPanel dengan padding 20px di atas
@@ -42,17 +44,17 @@ public class DetailKonser {
         mainContentPanel.setLayout(new BoxLayout(mainContentPanel, BoxLayout.Y_AXIS));
         // Mengatur warna background dari mainContentPanel menjadi putih
         mainContentPanel.setBackground(Color.WHITE);
-    
+
         // Menambahkan panel Movies ke mainContentPanel dengan data yang sudah
         mainContentPanel.add(createCategoryPanel(konser));
         mainContentPanel.add(Box.createVerticalStrut(10));
         mainContentPanel.add(Box.createVerticalStrut(30));
-    
+
         // Panel untuk tombol Pesan Tiket
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.setBackground(Color.WHITE);
-    
+
         // Membuat tombol Pesan Tiket
         JButton pesanTiketButton = new JButton("Pesan Tiket");
         pesanTiketButton.setPreferredSize(new Dimension(1300, 50));
@@ -62,24 +64,23 @@ public class DetailKonser {
         pesanTiketButton.addActionListener(e -> {
             new PesanTiket(konser.getTitle(), konser.getDate(), konser.getImage());
         });
-    
-        if(!konser.getStatus().equals("Coming Soon")){
-            buttonPanel.add(pesanTiketButton);  // Menambahkan tombol ke panel tombol
+
+        if (!konser.getStatus().equals("Coming Soon")) {
+            buttonPanel.add(pesanTiketButton); // Menambahkan tombol ke panel tombol
         }
-        
+
         // Menambahkan panel tombol ke mainContentPanel
-        mainContentPanel.add(Box.createVerticalStrut(20));  // Memberikan ruang sebelum panel tombol
-        mainContentPanel.add(buttonPanel);  // Menambahkan panel tombol ke panel utama
-    
+        mainContentPanel.add(Box.createVerticalStrut(20)); // Memberikan ruang sebelum panel tombol
+        mainContentPanel.add(buttonPanel); // Menambahkan panel tombol ke panel utama
+
         // Membungkus mainContentPanel dengan JScrollPane untuk enable scrolling
         JScrollPane scrollPane = new JScrollPane(mainContentPanel);
         // Mengatur tipe scrollbar untuk hanya muncul jika diperlukan
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); // jika tidak ingin scroll
-    
+
         return scrollPane;
     }
-    
 
     private JPanel createCategoryPanel(Konser konser) {
 

@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class SemuaTiket {
+public class SemuaTiket implements app{
     int idAkun;
     private JFrame frame;
     private JPanel mainPanel;
@@ -19,11 +19,7 @@ public class SemuaTiket {
 
         mainPanel = new JPanel(new BorderLayout());
 
-        ActionListener backButtonListener = e -> {
-            frame.dispose();
-        };
-
-        mainPanel.add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
+        mainPanel.add(createHeaderPanel(), BorderLayout.NORTH);
 
         mainPanel.add(createMainContentPanel(), BorderLayout.CENTER);
 
@@ -31,9 +27,13 @@ public class SemuaTiket {
 
         frame.setVisible(true);
     }
-
-    private JScrollPane createMainContentPanel() {
-        // Membuat panel utama untuk konten
+    @Override
+    public JPanel createHeaderPanel(){
+        return Head.createHeaderPanel(e -> frame.dispose());
+    }
+    @Override
+    public JScrollPane createMainContentPanel() {
+            // Membuat panel utama untuk konten
         JPanel mainContentPanel = new JPanel();
         // Mengatur border dari mainContentPanel dengan padding 20px di atas
         mainContentPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 20));

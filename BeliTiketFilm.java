@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class BeliTiketFilm {
+public class BeliTiketFilm implements app {
     private JFrame frame;
     private JPanel mainPanel;
     private int totalHarga = 0; 
@@ -31,11 +31,7 @@ public class BeliTiketFilm {
 
         mainPanel = new JPanel(new BorderLayout());
 
-        ActionListener backButtonListener = e -> {
-            frame.dispose();
-        };
-
-        mainPanel.add(Head.createHeaderPanel(backButtonListener), BorderLayout.NORTH);
+        mainPanel.add(createHeaderPanel(), BorderLayout.NORTH);
         mainPanel.add(createMainContentPanel(), BorderLayout.CENTER);
         frame.add(mainPanel, BorderLayout.CENTER);
         frame.setVisible(true);
@@ -43,7 +39,12 @@ public class BeliTiketFilm {
         startTimerThread();
     }
 
-    private JScrollPane createMainContentPanel() {
+    @Override
+    public JPanel createHeaderPanel(){
+        return Head.createHeaderPanel(e -> frame.dispose());
+    }
+    @Override
+    public JScrollPane createMainContentPanel() {
         JPanel mainContentPanel = new JPanel();
         mainContentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         mainContentPanel.setLayout(new BoxLayout(mainContentPanel, BoxLayout.Y_AXIS));
