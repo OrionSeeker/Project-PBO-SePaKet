@@ -1,5 +1,4 @@
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 
 public interface app {
     public abstract JPanel createHeaderPanel();
